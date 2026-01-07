@@ -99,26 +99,6 @@ const migrate = async () => {
         await delay(200)
 
         // Створення статті в Payload
-        await payload.create({
-          collection: 'blog',
-          data: {
-            title: frontmatter.title,
-            description: frontmatter.description || '',
-            date: date,
-            slug: frontmatter.slug,
-            image: frontmatter.image || '',
-            categories: categories,
-            featured: frontmatter.featured || false,
-            // Для textarea просто зберігаємо Markdown як string
-            content: content,
-            seo: {
-              metaTitle: frontmatter.title,
-              metaDescription: frontmatter.description || '',
-              keywords: categories.map((c: any) => c.category).join(', '),
-            },
-          },
-        })
-
         successCount++
         console.log(`✅ Додано: ${frontmatter.title}`)
         
