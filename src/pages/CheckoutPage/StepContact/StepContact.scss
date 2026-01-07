@@ -1,0 +1,265 @@
+.StepContact {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 40px 20px;
+
+	.PhoneInput {
+		padding: 0;
+		border: 2px solid #e9ecef;
+		border-radius: 8px;
+		font-size: 15px;
+		font-family: inherit;
+		background: var(--background);
+		color: var(--darkBlue);
+		transition: all 0.3s ease;
+
+		&:focus-within {
+			border-color: var(--darkBlue);
+			box-shadow: 0 0 0 3px rgba(37, 39, 88, 0.1);
+		}
+		.PhoneInputCountry {
+			display: none;
+		}
+
+		.PhoneInputInput {
+			padding: 14px 16px;
+			border: none;
+			background: transparent;
+			font-family: inherit;
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+
+	&__header {
+		text-align: center;
+		margin-bottom: 40px;
+	}
+
+	&__title {
+		font-size: 28px;
+		font-weight: 700;
+		color: var(--darkBlue);
+		margin-bottom: 12px;
+	}
+
+	&__subtitle {
+		font-size: 16px;
+		color: var(--darkBlue);
+		opacity: 0.8;
+		line-height: 1.5;
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
+
+	&__row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 20px;
+
+		@media (max-width: 768px) {
+			grid-template-columns: 1fr;
+			gap: 24px;
+		}
+	}
+
+	&__field {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__label {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--darkBlue);
+
+		svg {
+			color: var(--darkBlue);
+			opacity: 0.7;
+		}
+	}
+
+	&__input,
+	&__textarea {
+		padding: 14px 16px;
+		border: 2px solid #e9ecef;
+		border-radius: 8px;
+		font-size: 16px;
+		font-family: inherit;
+		background: var(--background);
+		color: var(--darkBlue);
+		transition: all 0.3s ease;
+
+		&:focus {
+			outline: none;
+			border-color: var(--darkBlue);
+			box-shadow: 0 0 0 3px rgba(37, 39, 88, 0.1);
+		}
+
+		&::placeholder {
+			color: #6c757d;
+		}
+
+		// Состояние ошибки
+		&:invalid {
+			border-color: #dc3545;
+		}
+	}
+
+	&__textarea {
+		resize: vertical;
+		min-height: 80px;
+		line-height: 1.5;
+	}
+
+	&__error {
+		font-size: 13px;
+		color: #dc3545;
+		font-weight: 500;
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		margin-top: 4px;
+
+		&::before {
+			content: "⚠";
+			font-size: 12px;
+		}
+	}
+
+	&__actions {
+		margin-top: 20px;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	&__next-btn {
+		background: var(--darkBlue);
+		color: var(--white);
+		border: none;
+		padding: 16px 32px;
+		border-radius: 8px;
+		font-size: 16px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		min-width: 200px;
+
+		&:hover:not(:disabled) {
+			background: var(--lightGreen);
+			transform: translateY(-2px);
+			box-shadow: 0 4px 12px rgba(135, 225, 47, 0.3);
+		}
+
+		&:active:not(:disabled) {
+			transform: translateY(0);
+		}
+
+		&:disabled {
+			background: #6c757d;
+			cursor: not-allowed;
+			opacity: 0.6;
+			transform: none;
+			box-shadow: none;
+		}
+	}
+}
+
+// Адаптивность для планшетов
+@media (max-width: 768px) {
+	.StepContact {
+		padding: 30px 15px;
+
+		&__title {
+			font-size: 24px;
+		}
+
+		&__subtitle {
+			font-size: 15px;
+		}
+
+		&__next-btn {
+			width: 100%;
+			min-width: unset;
+		}
+	}
+}
+
+// Адаптивность для мобильных
+@media (max-width: 480px) {
+	.StepContact {
+		padding: 20px 0;
+
+		&__title {
+			font-size: 22px;
+		}
+
+		&__subtitle {
+			font-size: 14px;
+		}
+
+		&__input,
+		&__textarea {
+			padding: 12px 14px;
+			font-size: 16px;
+		}
+
+		&__next-btn {
+			padding: 14px 24px;
+			font-size: 15px;
+		}
+	}
+}
+
+// Анимации
+@keyframes slideInUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.StepContact {
+	animation: slideInUp 0.5s ease forwards;
+}
+
+.StepContact__field {
+	animation: slideInUp 0.5s ease forwards;
+
+	&:nth-child(1) {
+		animation-delay: 0.1s;
+	}
+	&:nth-child(2) {
+		animation-delay: 0.2s;
+	}
+	&:nth-child(3) {
+		animation-delay: 0.3s;
+	}
+	&:nth-child(4) {
+		animation-delay: 0.4s;
+	}
+	&:nth-child(5) {
+		animation-delay: 0.5s;
+	}
+}
+
+// Улучшение доступности
+.StepContact__input:focus-visible,
+.StepContact__textarea:focus-visible {
+	outline: 2px solid var(--lightGreen);
+	outline-offset: 2px;
+}

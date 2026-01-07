@@ -1,0 +1,301 @@
+// src/pages/ArticlePage/ArticlePage.scss
+// Стили для страницы отдельной статьи блога
+
+.ArticlePage {
+	min-height: calc(100vh - 120px);
+	padding: 32px 0 0 0;
+
+	&__breadcrumbs {
+		margin-bottom: 32px;
+
+		.breadcrumb-list {
+			display: flex;
+			align-items: center;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			gap: 8px;
+			flex-wrap: wrap;
+		}
+
+		.breadcrumb-item {
+			display: flex;
+			align-items: center;
+			font-size: 14px;
+			color: var(--darkGray);
+
+			a {
+				color: var(--darkGray);
+				text-decoration: none;
+				transition: color 0.3s ease;
+
+				&:hover {
+					color: var(--lightGreen);
+				}
+			}
+
+			&.active {
+				color: var(--darkBlue);
+				font-weight: 500;
+
+				// Обрезаем длинные заголовки
+				max-width: 300px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				display: inline-block; // Важно для работы ellipsis
+				vertical-align: middle; // Выравнивание по вертикали
+			}
+
+			&:not(:last-child)::after {
+				content: ">";
+				margin-left: 8px;
+				color: var(--darkGray);
+				font-size: 12px;
+				flex-shrink: 0;
+			}
+		}
+	}
+
+	&__navigation {
+		margin: 48px 0;
+		padding: 24px 0;
+		border-top: 1px solid var(--lightGray);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__back-to-blog {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 12px 24px;
+		background: var(--lightGreen);
+		color: var(--white);
+		text-decoration: none;
+		border-radius: 50px;
+		font-weight: 500;
+		font-size: 14px;
+		transition: all 0.3s ease;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+
+		&:hover {
+			background: var(--darkBlue);
+			transform: translateY(-2px);
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+		}
+
+		&:active {
+			transform: translateY(0);
+		}
+	}
+
+	&__related {
+		margin-top: 80px;
+		background: linear-gradient(135deg, #f8f9fa 0%, var(--white) 100%);
+	}
+
+	// Страница "не найдено"
+	&__not-found {
+		text-align: center;
+		padding: 120px 20px;
+		max-width: 500px;
+		margin: 0 auto;
+
+		h2 {
+			font-size: 32px;
+			font-weight: 600;
+			color: var(--darkBlue);
+			margin: 0 0 16px 0;
+		}
+
+		p {
+			font-size: 16px;
+			color: var(--darkGray);
+			margin: 0 0 32px 0;
+			line-height: 1.6;
+		}
+	}
+
+	&__back-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 16px 32px;
+		background: var(--lightGreen);
+		color: var(--white);
+		text-decoration: none;
+		border-radius: 50px;
+		font-weight: 600;
+		font-size: 16px;
+		transition: all 0.3s ease;
+
+		&:hover {
+			background: var(--darkBlue);
+			transform: translateY(-2px);
+			box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+		}
+	}
+}
+
+// Адаптивность
+@media (max-width: 768px) {
+	.ArticlePage {
+		padding: 24px 0 0 0;
+
+		&__breadcrumbs {
+			margin-bottom: 24px;
+
+			.breadcrumb-item {
+				font-size: 13px;
+
+				&.active {
+					max-width: 200px;
+				}
+			}
+		}
+
+		&__navigation {
+			margin: 32px 0;
+			padding: 20px 0;
+		}
+
+		&__back-to-blog {
+			padding: 10px 20px;
+			font-size: 13px;
+		}
+
+		&__related {
+			margin-top: 60px;
+		}
+
+		&__not-found {
+			padding: 80px 16px;
+
+			h2 {
+				font-size: 24px;
+			}
+
+			p {
+				font-size: 15px;
+			}
+		}
+
+		&__back-button {
+			padding: 14px 28px;
+			font-size: 14px;
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.ArticlePage {
+		padding: 20px 0 0 0;
+
+		&__breadcrumbs {
+			margin-bottom: 20px;
+
+			.breadcrumb-item {
+				font-size: 12px;
+
+				&.active {
+					max-width: 150px;
+				}
+			}
+		}
+
+		&__navigation {
+			margin: 24px 0;
+			padding: 16px 0;
+		}
+
+		&__back-to-blog {
+			padding: 10px 16px;
+			font-size: 12px;
+			border-radius: 40px;
+		}
+
+		&__related {
+			margin-top: 48px;
+		}
+
+		&__not-found {
+			padding: 60px 12px;
+
+			h2 {
+				font-size: 20px;
+			}
+
+			p {
+				font-size: 14px;
+				margin-bottom: 24px;
+			}
+		}
+
+		&__back-button {
+			padding: 12px 24px;
+			font-size: 13px;
+		}
+	}
+}
+
+// Анимации
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.ArticlePage {
+	&__breadcrumbs {
+		animation: fadeInUp 0.6s ease forwards;
+	}
+
+	&__navigation {
+		animation: fadeInUp 0.6s ease 0.2s forwards;
+		opacity: 0;
+		animation-fill-mode: forwards;
+	}
+
+	&__related {
+		animation: fadeInUp 0.8s ease 0.4s forwards;
+		opacity: 0;
+		animation-fill-mode: forwards;
+	}
+}
+
+// Улучшения доступности
+.ArticlePage__back-to-blog:focus-visible,
+.ArticlePage__back-button:focus-visible {
+	outline: 2px solid var(--lightGreen);
+	outline-offset: 2px;
+}
+
+// Стилизация скроллбара для длинных статей
+.ArticlePage {
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: #f1f1f1;
+		border-radius: 4px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: var(--lightGreen);
+		border-radius: 4px;
+		opacity: 0.7;
+
+		&:hover {
+			background: var(--darkBlue);
+		}
+	}
+}

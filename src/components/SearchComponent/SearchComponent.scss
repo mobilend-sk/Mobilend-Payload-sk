@@ -1,0 +1,303 @@
+ .search-component {
+     display: inline-block;
+
+     .search-component_blur {
+         width: 100%;
+         height: 100vh;
+         position: absolute;
+         top: 60px;
+         left: 0;
+         background-color: rgba(0, 0, 0, 0.507);
+     }
+
+     .search-btn {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         width: 40px;
+         height: 40px;
+         background: none;
+         border: none;
+         border-radius: 8px;
+         cursor: pointer;
+         transition: all 0.2s ease;
+         color: var(--darkBlue);
+     }
+
+
+     .search-btn:hover {
+         transform: scale(1.05);
+     }
+
+     .search-form {
+         animation: slideIn 0.3s ease-out;
+     }
+
+
+     .searh-results__wrapper {
+         position: absolute;
+         max-width: 309px;
+         width: 100%;
+         height: 480px;
+         background-color: var(--white);
+         border-radius: 0 0 20px 20px;
+         overflow: hidden;
+         overflow-y: scroll;
+         -webkit-overflow-scrolling: touch;
+         scrollbar-width: none;
+         animation: slideDown 0.3s ease-out;
+     }
+
+     svg {
+         transition: color .2s;
+     }
+
+     .search-input-wrapper {
+         display: flex;
+         align-items: center;
+         background: white;
+         border: 2px solid var(--darkBlue);
+         border-radius: 25px;
+         padding: 4px;
+         box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+         min-width: 300px;
+         margin: 0 auto;
+     }
+
+     .CatalogList {
+         padding: 10px 0;
+
+         img {
+             max-height: 80px;
+         }
+
+         .ProductCard__image-popular {
+             font-size: 10px;
+         }
+
+         .ProductCard__image-discount {
+             font-size: 10px;
+             left: auto;
+         }
+
+         .ProductCard__price-discount {
+             display: none;
+         }
+
+         .ProductCard__ .CatalogList__grid {
+             flex-direction: column;
+             gap: 10px;
+             margin: 0 auto;
+         }
+
+         .CatalogList__header {
+             display: none;
+         }
+
+
+         .ProductCard {
+
+             display: flex;
+             justify-content: space-between;
+             max-height: 80px;
+             max-width: none;
+
+             a {
+                 display: flex;
+                 align-items: center;
+             }
+
+             h3 {
+                 font-size: 13px;
+                 height: 30px;
+             }
+
+             .ProductCard__price {
+                 flex-wrap: wrap;
+                 gap: 0;
+
+                 .ProductCard__price-total {
+                     font-size: 14px;
+                     text-align: center;
+                     white-space: nowrap;
+                 }
+
+                 .ProductCard__price-discount {
+                     font-size: 14px;
+                     text-align: center;
+                     white-space: nowrap;
+                 }
+             }
+
+
+             .BuyButton {
+                 display: none;
+             }
+
+         }
+     }
+
+     .search-input {
+         flex: 1;
+         border: none;
+         outline: none;
+         padding: 10px 16px;
+         font-size: 14px;
+         background: transparent;
+         color: #2c3e50;
+     }
+
+     .search-input::placeholder {
+         color: #95a5a6;
+     }
+
+     .search-submit {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         width: 32px;
+         height: 32px;
+         background: #3498db;
+         border: none;
+         border-radius: 50%;
+         cursor: pointer;
+         color: white;
+         transition: all 0.2s ease;
+         margin-right: 4px;
+     }
+
+     .search-submit:hover {
+         background: #2980b9;
+         transform: scale(1.1);
+     }
+
+     .search-submit:disabled {
+         background: #bdc3c7;
+         cursor: not-allowed;
+         transform: none;
+     }
+
+     .search-close {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         width: 32px;
+         height: 32px;
+         background: #e74c3c;
+         border: none;
+         border-radius: 50%;
+         cursor: pointer;
+         color: white;
+         transition: all 0.2s ease;
+     }
+
+     .search-close:hover {
+         background: #c0392b;
+         transform: scale(1.1);
+     }
+ }
+
+
+ @keyframes slideIn {
+     from {
+         opacity: 0;
+         transform: translateX(20px);
+     }
+
+     to {
+         opacity: 1;
+         transform: translateX(0);
+     }
+ }
+
+
+ @keyframes slideDown {
+     from {
+         opacity: 0;
+         transform: translateY(-20px);
+     }
+
+     to {
+         opacity: 1;
+         transform: translateY(0);
+     }
+ }
+
+
+ @media (max-width: 1100px) {
+
+     .header--search-active {
+         .Logotype .header__menu .header-ico__wrapper {
+             display: none !important
+         }
+
+         .CartLink {
+             z-index: 0;
+         }
+
+     }
+
+     .search-modal-open {
+         overflow: hidden;
+         position: fixed;
+         width: 100%;
+     }
+
+     .search-component {
+
+         .searh-results__wrapper {
+             width: 100%;
+             height: calc(100vh - 40px); // Віднімаємо висоту хедера
+             height: calc(100dvh - 40px); // Віднімаємо висоту хедера
+             background-color: var(--white);
+             position: absolute;
+             top: 60px; // Виправлено: було top: 60 без 'px'
+             left: 0;
+             max-width: none;
+             padding-bottom: 20px; // Додаємо нижній padding
+         }
+
+         .CatalogList {
+             padding: 10px 0 20px 0; // Додаємо нижній padding
+         }
+
+         .search-input-wrapper {
+             width: 100%;
+         }
+
+         .search-form {
+             animation: slideIn 0.3s ease-out;
+             position: absolute;
+             width: 100%;
+             height: 60px;
+             background-color: white;
+             top: 0;
+             left: 0;
+             z-index: 1;
+             display: flex;
+             align-items: center;
+             padding: 0 15px;
+         }
+
+
+
+
+         .search-input {
+             padding: 8px 12px;
+             font-size: 14px;
+         }
+
+         .ProductCard {
+             min-height: 100px;
+             width: 100%;
+
+             .ProductCard__image-popular {
+                 font-size: 11px;
+             }
+
+             .ProductCard__image-discount {
+                 font-size: 10px;
+             }
+         }
+     }
+ }

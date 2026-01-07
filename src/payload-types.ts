@@ -69,6 +69,11 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    products: Product;
+    blog: Blog;
+    orders: Order;
+    transactions: Transaction;
+    'media-folders': MediaFolder;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +83,11 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
+    blog: BlogSelect<false> | BlogSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
+    transactions: TransactionsSelect<false> | TransactionsSelect<true>;
+    'media-folders': MediaFoldersSelect<false> | MediaFoldersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -146,7 +156,14 @@ export interface User {
  */
 export interface Media {
   id: string;
-  alt: string;
+  /**
+   * Опис зображення для SEO та доступності
+   */
+  alt?: string | null;
+  /**
+   * Виберіть папку для організації файлів
+   */
+  folder?: (string | null) | MediaFolder;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -158,6 +175,425 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    tablet?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * Управління папками для медіафайлів
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-folders".
+ */
+export interface MediaFolder {
+  id: string;
+  /**
+   * Назва папки (напр. Products, Blog)
+   */
+  name: string;
+  /**
+   * URL-friendly назва (напр. products, blog)
+   */
+  slug: string;
+  /**
+   * Опціональний опис призначення папки
+   */
+  description?: string | null;
+  /**
+   * Відображати папку в списку
+   */
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  /**
+   * Назва телефону (напр. Apple iPhone 14)
+   */
+  phone: string;
+  /**
+   * Повна назва моделі з характеристиками
+   */
+  model: string;
+  category: 'phone' | 'tablet' | 'laptop';
+  /**
+   * Група моделі (напр. iPhone)
+   */
+  modelGroup: string;
+  /**
+   * HEX код кольору
+   */
+  color: string;
+  /**
+   * Об'єм пам'яті (напр. 128 GB)
+   */
+  memory: string;
+  /**
+   * Ціна продукту (може бути null для недоступних)
+   */
+  price?: number | null;
+  currency?: string | null;
+  currencyLabel?: string | null;
+  /**
+   * Знижка у відсотках
+   */
+  discount?: number | null;
+  popular?: boolean | null;
+  /**
+   * URL slug для продукту (автогенерується)
+   */
+  productLink?: string | null;
+  /**
+   * Короткий опис продукту
+   */
+  shortInfo?: string | null;
+  /**
+   * Виберіть папку для організації зображень
+   */
+  imageFolder?: (string | null) | MediaFolder;
+  /**
+   * Головне зображення продукту
+   */
+  mainImage: string | Media;
+  images?:
+    | {
+        image: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  mainCharacteristics?:
+    | {
+        label?: string | null;
+        value?: string | null;
+        key?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  display?:
+    | {
+        label?: string | null;
+        value?: string | null;
+        key?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  dimensions?:
+    | {
+        label?: string | null;
+        value?: string | null;
+        key?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  camera?:
+    | {
+        label?: string | null;
+        value?: string | null;
+        key?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  features?:
+    | {
+        label?: string | null;
+        value?: string | null;
+        key?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  battery?:
+    | {
+        label?: string | null;
+        value?: string | null;
+        key?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  hardware?:
+    | {
+        label?: string | null;
+        value?: string | null;
+        key?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  connectivity?:
+    | {
+        label?: string | null;
+        value?: string | null;
+        key?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  energy?:
+    | {
+        label?: string | null;
+        value?: string | null;
+        key?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog".
+ */
+export interface Blog {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  /**
+   * Automaticky generovaný z názvu
+   */
+  slug: string;
+  /**
+   * Nahrajte hlavný obrázok článku
+   */
+  image: string | Media;
+  gallery?:
+    | {
+        image: string | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Vyberte jednu alebo viac kategórií
+   */
+  categories: string[];
+  featured?: boolean | null;
+  /**
+   * Hlavný obsah článku s formátovaním
+   */
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  author?: {
+    name?: string | null;
+    avatar?: (string | null) | Media;
+    bio?: string | null;
+  };
+  /**
+   * Odhadovaný čas potrebný na prečítanie
+   */
+  readTime?: number | null;
+  seo?: {
+    /**
+     * Ak prázdne, použije sa hlavný nadpis
+     */
+    metaTitle?: string | null;
+    /**
+     * Ak prázdny, použije sa hlavný popis
+     */
+    metaDescription?: string | null;
+    /**
+     * Oddelené čiarkami
+     */
+    keywords?: string | null;
+    /**
+     * Pre sociálne siete (ak prázdne, použije sa hlavný obrázok)
+     */
+    ogImage?: (string | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: string;
+  orderNumber: string;
+  status: 'pending' | 'paid' | 'cancelled' | 'failed';
+  paymentMethod: 'cash_on_delivery' | 'card' | 'loan';
+  totalItems: number;
+  basePayment: {
+    amountValue: number;
+    currency: string;
+  };
+  userData?: {
+    firstName?: string | null;
+    lastName?: string | null;
+    email?: string | null;
+    emailHash?: string | null;
+    externalApplicantId?: string | null;
+    phone?: string | null;
+  };
+  clientDetail?: {
+    country?: string | null;
+    streetName?: string | null;
+    buildingNumber?: string | null;
+    townName?: string | null;
+    postCode?: string | null;
+    cardHolder?: string | null;
+  };
+  order?: {
+    orderNo?: string | null;
+    orderItems?:
+      | {
+          quantity: number;
+          totalItemPrice: number;
+          itemDetail?: {
+            itemDetailSK?: {
+              itemName?: string | null;
+              itemDescription?: string | null;
+            };
+            itemDetailEN?: {
+              itemName?: string | null;
+              itemDescription?: string | null;
+            };
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  creditData?: {
+    preferredLoanDuration?: number | null;
+    variableSymbol?: string | null;
+    specificSymbol?: string | null;
+    constantSymbol?: string | null;
+    remittanceInformation?: string | null;
+    monthlyIncome?: number | null;
+    monthlyExpenses?: number | null;
+    numberOfChildren?: number | null;
+    bankResponse?:
+      | {
+          [k: string]: unknown;
+        }
+      | unknown[]
+      | string
+      | number
+      | boolean
+      | null;
+  };
+  orderActions?:
+    | {
+        action: string;
+        message?: string | null;
+        timestamp: string;
+        id?: string | null;
+      }[]
+    | null;
+  telegramMessageId?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "transactions".
+ */
+export interface Transaction {
+  id: string;
+  paymentId?: string | null;
+  requestData?: {
+    userData?: {
+      firstName?: string | null;
+      lastName?: string | null;
+      email?: string | null;
+      externalApplicantId?: string | null;
+      phone?: string | null;
+    };
+    payLater?: {
+      order?: {
+        orderItems?:
+          | {
+              itemId?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+      };
+    };
+  };
+  status: 'initiated' | 'pending' | 'processing' | 'completed' | 'failed';
+  authorizationStatus?: string | null;
+  statusHistory?:
+    | {
+        status: string;
+        authorizationStatus?: string | null;
+        message?: string | null;
+        timestamp: string;
+        rawData?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  metadata?: {
+    currency?: string | null;
+    paymentMethod?: string | null;
+    customerEmail?: string | null;
+    customerPhone?: string | null;
+    ipAddress?: string | null;
+    userAgent?: string | null;
+  };
+  transactionTimestamps?: {
+    initiated?: string | null;
+    redirected?: string | null;
+    completed?: string | null;
+  };
+  statusCheckAttempts?: number | null;
+  lastStatusCheck?: string | null;
+  responseData?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -190,6 +626,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: string | Product;
+      } | null)
+    | ({
+        relationTo: 'blog';
+        value: string | Blog;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: string | Order;
+      } | null)
+    | ({
+        relationTo: 'transactions';
+        value: string | Transaction;
+      } | null)
+    | ({
+        relationTo: 'media-folders';
+        value: string | MediaFolder;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -261,6 +717,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  folder?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -272,6 +729,348 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        tablet?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  phone?: T;
+  model?: T;
+  category?: T;
+  modelGroup?: T;
+  color?: T;
+  memory?: T;
+  price?: T;
+  currency?: T;
+  currencyLabel?: T;
+  discount?: T;
+  popular?: T;
+  productLink?: T;
+  shortInfo?: T;
+  imageFolder?: T;
+  mainImage?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  mainCharacteristics?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        key?: T;
+        id?: T;
+      };
+  display?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        key?: T;
+        id?: T;
+      };
+  dimensions?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        key?: T;
+        id?: T;
+      };
+  camera?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        key?: T;
+        id?: T;
+      };
+  features?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        key?: T;
+        id?: T;
+      };
+  battery?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        key?: T;
+        id?: T;
+      };
+  hardware?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        key?: T;
+        id?: T;
+      };
+  connectivity?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        key?: T;
+        id?: T;
+      };
+  energy?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        key?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog_select".
+ */
+export interface BlogSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  date?: T;
+  slug?: T;
+  image?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  categories?: T;
+  featured?: T;
+  content?: T;
+  author?:
+    | T
+    | {
+        name?: T;
+        avatar?: T;
+        bio?: T;
+      };
+  readTime?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        keywords?: T;
+        ogImage?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  orderNumber?: T;
+  status?: T;
+  paymentMethod?: T;
+  totalItems?: T;
+  basePayment?:
+    | T
+    | {
+        amountValue?: T;
+        currency?: T;
+      };
+  userData?:
+    | T
+    | {
+        firstName?: T;
+        lastName?: T;
+        email?: T;
+        emailHash?: T;
+        externalApplicantId?: T;
+        phone?: T;
+      };
+  clientDetail?:
+    | T
+    | {
+        country?: T;
+        streetName?: T;
+        buildingNumber?: T;
+        townName?: T;
+        postCode?: T;
+        cardHolder?: T;
+      };
+  order?:
+    | T
+    | {
+        orderNo?: T;
+        orderItems?:
+          | T
+          | {
+              quantity?: T;
+              totalItemPrice?: T;
+              itemDetail?:
+                | T
+                | {
+                    itemDetailSK?:
+                      | T
+                      | {
+                          itemName?: T;
+                          itemDescription?: T;
+                        };
+                    itemDetailEN?:
+                      | T
+                      | {
+                          itemName?: T;
+                          itemDescription?: T;
+                        };
+                  };
+              id?: T;
+            };
+      };
+  creditData?:
+    | T
+    | {
+        preferredLoanDuration?: T;
+        variableSymbol?: T;
+        specificSymbol?: T;
+        constantSymbol?: T;
+        remittanceInformation?: T;
+        monthlyIncome?: T;
+        monthlyExpenses?: T;
+        numberOfChildren?: T;
+        bankResponse?: T;
+      };
+  orderActions?:
+    | T
+    | {
+        action?: T;
+        message?: T;
+        timestamp?: T;
+        id?: T;
+      };
+  telegramMessageId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "transactions_select".
+ */
+export interface TransactionsSelect<T extends boolean = true> {
+  paymentId?: T;
+  requestData?:
+    | T
+    | {
+        userData?:
+          | T
+          | {
+              firstName?: T;
+              lastName?: T;
+              email?: T;
+              externalApplicantId?: T;
+              phone?: T;
+            };
+        payLater?:
+          | T
+          | {
+              order?:
+                | T
+                | {
+                    orderItems?:
+                      | T
+                      | {
+                          itemId?: T;
+                          id?: T;
+                        };
+                  };
+            };
+      };
+  status?: T;
+  authorizationStatus?: T;
+  statusHistory?:
+    | T
+    | {
+        status?: T;
+        authorizationStatus?: T;
+        message?: T;
+        timestamp?: T;
+        rawData?: T;
+        id?: T;
+      };
+  metadata?:
+    | T
+    | {
+        currency?: T;
+        paymentMethod?: T;
+        customerEmail?: T;
+        customerPhone?: T;
+        ipAddress?: T;
+        userAgent?: T;
+      };
+  transactionTimestamps?:
+    | T
+    | {
+        initiated?: T;
+        redirected?: T;
+        completed?: T;
+      };
+  statusCheckAttempts?: T;
+  lastStatusCheck?: T;
+  responseData?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-folders_select".
+ */
+export interface MediaFoldersSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

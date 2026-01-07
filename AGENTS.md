@@ -509,7 +509,7 @@ export async function GET() {
 
 // In Server Components
 import { getPayload } from 'payload'
-import config from '@payload-config'
+@payload-configimport config from ''
 
 export default async function Page() {
   const payload = await getPayload({ config })

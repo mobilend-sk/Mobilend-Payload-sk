@@ -1,0 +1,170 @@
+header.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: var(--background);
+	width: 100%;
+	z-index: 5;
+	transition: box-shadow 0.3s ease;
+	box-shadow: 0 2px 20px rgba(37, 39, 88, 0.1);
+
+	.header__wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 30px;
+		height: 60px;
+	}
+
+	.header__menu {
+		margin: 0 auto;
+	}
+
+	.header-ico__wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		z-index: 6;
+	}
+
+	.header__burger {
+		display: none;
+	}
+}
+
+// Мобільна нижня меню (прихована на десктопі)
+.mobile-bottom-menu {
+	display: none;
+}
+
+@media all and (max-width: 884px) {
+	header.header {
+		.header__menu {
+			position: absolute;
+			z-index: 1;
+			height: 100vh;
+			height: 100dvh;
+			width: 100%;
+			top: 0;
+			left: -150%;
+			background: var(--white);
+			transition: all 0.3s;
+
+			nav.Menu ul {
+				height: 100vh;
+				height: 100dvh;
+				flex-direction: column;
+				justify-content: center;
+				gap: 50px;
+
+				a {
+					font-size: 20px;
+				}
+			}
+		}
+
+
+		.header-ico__wrapper {
+			.search__wrapper {
+				display: block;
+				margin-left: auto;
+			}
+
+			.active-orders-component {
+				display: none;
+			}
+		}
+
+		.header__menu.active {
+			left: 0;
+		}
+
+		.header__wrapper {
+			gap: 5px;
+		}
+
+		.header__burger {
+			display: none; // Бургер тепер в нижній меню
+		}
+
+		.header__cart {
+			display: none; // Кошик тепер в нижній меню
+		}
+	}
+
+	// Мобільна нижня меню
+	.mobile-bottom-menu {
+		display: flex;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background: var(--white);
+		box-shadow: 0 -2px 20px rgba(37, 39, 88, 0.1);
+		padding: 10px 20px;
+		z-index: 10;
+		align-items: center;
+		justify-content: space-around;
+		gap: 15px;
+		height: 60px;
+
+		.mobile-bottom-menu__search {
+			flex: 1;
+			max-width: 200px;
+		}
+
+		.mobile-bottom-menu__cart {
+			display: flex;
+			align-items: center;
+		}
+
+		.mobile-bottom-menu__burger {
+			display: block;
+			background: none;
+			cursor: pointer;
+			border: none;
+			height: 32px;
+			width: 32px;
+			padding: 0;
+
+			svg {
+				width: 32px;
+				height: 32px;
+				color: var(--darkBlue);
+			}
+		}
+
+		.mobile-bottom-menu__katalog {
+			display: block;
+			background: none;
+			cursor: pointer;
+			border: none;
+			height: 32px;
+			width: 32px;
+			padding: 0;
+
+			svg {
+				width: 32px;
+				height: 32px;
+				color: var(--darkBlue);
+			}
+		}
+	}
+
+
+	// Додаємо padding-bottom до body щоб контент не ховався під нижньою меню
+	body {
+		padding-bottom: 60px;
+	}
+}
+
+@media all and (max-width: 480px) {
+	.mobile-bottom-menu {
+		padding: 8px 15px;
+		gap: 10px;
+
+		.mobile-bottom-menu__search {
+			max-width: 150px;
+		}
+	}
+}

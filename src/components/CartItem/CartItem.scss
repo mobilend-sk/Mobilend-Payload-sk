@@ -1,0 +1,273 @@
+.CartItem {
+	display: flex;
+	gap: 20px;
+	padding: 15px;
+	background: white;
+	border-radius: 12px;
+	border: 1px solid #e9ecef;
+	transition: all 0.2s ease;
+	position: relative;
+
+	&:hover {
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	}
+
+	@media (max-width: 768px) {
+		gap: 16px;
+		padding: 12px;
+		padding-bottom: 64px;
+	}
+
+	&__image {
+		position: relative;
+
+		width: 120px;
+		height: 120px;
+
+		@media (max-width: 768px) {
+			width: 100px;
+			height: 100px;
+		}
+
+		a {
+			display: block;
+			border-radius: 8px;
+			overflow: hidden;
+			transition: transform 0.2s;
+
+			&:hover {
+				transform: scale(1.05);
+			}
+		}
+	}
+
+	&__img {
+		width: 120px;
+		height: 120px;
+		object-fit: contain;
+		background: #f8f9fa;
+		border-radius: 8px;
+
+		@media (max-width: 768px) {
+			width: 100px;
+			height: 100px;
+		}
+	}
+
+	&__discount-badge {
+		position: absolute;
+		top: 8px;
+		right: 8px;
+		background: #dc3545;
+		color: white;
+		padding: 4px 8px;
+		border-radius: 4px;
+		font-size: 12px;
+		font-weight: 600;
+	}
+
+	&__info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 12px;
+
+		@media (max-width: 768px) {
+			flex-direction: column;
+			gap: 8px;
+		}
+	}
+
+	&__title {
+		flex: 1;
+		font-size: 18px;
+		font-weight: 600;
+		color: var(--darkBlue);
+		text-decoration: none;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+		line-height: 1.4;
+		max-height: calc(1.4em * 2); // высота двух строк
+
+		gap: 8px;
+		align-items: center;
+		transition: color 0.2s;
+
+		&:hover {
+			color: var(--lightGreen);
+		}
+
+		svg {
+			opacity: 0.5;
+		}
+
+		@media (max-width: 768px) {
+			font-size: 16px;
+		}
+	}
+
+	&__remove-btn {
+		background: none;
+		border: none;
+		color: #dc3545;
+		cursor: pointer;
+		padding: 8px;
+		border-radius: 4px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.2s;
+
+		&:hover {
+			background: rgba(220, 53, 69, 0.1);
+			transform: scale(1.1);
+		}
+
+		@media (max-width: 768px) {
+			position: absolute;
+			bottom: 12px;
+			right: 12px;
+		}
+	}
+
+	&__details {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 20px;
+		flex-wrap: wrap;
+
+		@media (max-width: 768px) {
+			gap: 12px;
+		}
+	}
+
+	&__price {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	&__price-current {
+		font-size: 18px;
+		font-weight: 700;
+		color: var(--darkBlue);
+	}
+
+	&__price-original {
+		font-size: 14px;
+		color: #999;
+		text-decoration: line-through;
+	}
+
+	&__quantity {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+		background: #f8f9fa;
+		border-radius: 6px;
+		padding: 2px;
+
+		@media (max-width: 768px) {
+			justify-content: center;
+		}
+	}
+
+	&__quantity-btn {
+		width: 36px;
+		height: 36px;
+		border: none;
+		background: white;
+		color: var(--darkBlue);
+		border-radius: 4px;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 16px;
+		font-weight: 600;
+		transition: all 0.2s;
+
+		@media (max-width: 768px) {
+			width: 24px;
+			height: 36px;
+		}
+
+		&:hover:not(:disabled) {
+			background: var(--lightGreen);
+			color: white;
+			transform: scale(1.1);
+		}
+
+		&:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
+		&:active:not(:disabled) {
+			transform: scale(0.9);
+		}
+	}
+
+	&__quantity-display {
+		min-width: 40px;
+		text-align: center;
+		font-size: 16px;
+		font-weight: 600;
+		color: var(--darkBlue);
+		padding: 0 8px;
+	}
+
+	&__total {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 4px;
+
+		@media (max-width: 768px) {
+			align-items: flex-start;
+			position: absolute;
+			left: 12px;
+			bottom: 12px;
+		}
+	}
+
+	&__total-label {
+		font-size: 14px;
+		color: #7f8c8d;
+	}
+
+	&__total-price {
+		font-size: 20px;
+		font-weight: 700;
+		color: var(--darkBlue);
+	}
+}
+
+// Анимации для обновления количества
+@keyframes quantityUpdate {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+.CartItem__quantity-display {
+	&.updating {
+		animation: quantityUpdate 0.3s ease-out;
+	}
+}

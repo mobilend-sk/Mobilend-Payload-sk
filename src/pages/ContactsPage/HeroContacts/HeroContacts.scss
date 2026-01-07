@@ -1,0 +1,39 @@
+.HeroContacts {
+	padding: 40px 0;
+
+	@media (max-width: 1024px) {
+		padding: 20px 0 40px 0;
+	}
+
+	.HeroContacts__wrapper {
+		display: flex;
+		gap: 30px;
+		justify-content: space-between;
+
+		@media (max-width: 1024px) {
+			flex-wrap: wrap;
+		}
+	}
+
+	iframe {
+		border: 0;
+		width: 100%;
+		max-width: 700px;
+		flex-shrink: 0;
+	}
+
+	h1 {
+		margin-bottom: 30px;
+		@media (max-width: 1024px) {
+			font-size: 24px;
+		}
+	}
+
+	h2 {
+		font-size: 20px;
+		margin: 20px 0 6px 0;
+		@media (max-width: 1024px) {
+			font-size: 18px;
+		}
+	}
+}

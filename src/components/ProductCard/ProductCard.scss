@@ -1,0 +1,129 @@
+.ProductCard {
+	max-width: 200px;
+	border: 1px solid var(--darkBlue);
+	border-radius: 15px;
+	overflow: hidden;
+	position: relative;
+
+	a {
+		color: var(--darkBlue);
+		text-decoration: none;
+	}
+
+	h3 {
+		font-size: 16px;
+		padding: 0 13px;
+		margin-top: 6px;
+		height: 56px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		line-height: 1.2; /* Добавьте для точного расчета высоты */
+	}
+	img {
+		width: 100%;
+		height: 220px;
+		object-fit: contain;
+	}
+	.ProductCard__bottom {
+		padding: 12px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.ProductCard__price {
+		display: flex;
+		gap: 6px;
+
+		&-total {
+			font-weight: 700;
+			font-size: 20px;
+		}
+
+		&-discount {
+			font-size: 14px;
+			text-decoration: line-through;
+			font-weight: 500;
+			opacity: 0.7;
+		}
+	}
+
+	.ProductCard__image {
+		position: relative;
+	}
+	.ProductCard__image-discount {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		background: var(--red);
+		padding: 4px 8px;
+		font-size: 14px;
+		border-radius: 10px;
+		color: var(--white);
+		font-weight: 500;
+	}
+	.ProductCard__Desc {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		.ProductCard__image-popular {
+			margin-left: 5px;
+			position: relative;
+			background: var(--lightGreen);
+			padding: 4px 8px;
+			font-size: 14px;
+			border-radius: 10px;
+			color: var(--white);
+			font-weight: 500;
+			max-width: 90px;
+			z-index: 1;
+		}
+	}
+}
+
+@media all and (max-width: 480px) {
+	.ProductCard {
+		border-radius: 10px;
+		.ProductCard__price {
+			display: flex;
+			gap: 6px;
+
+			&-total {
+				font-weight: 700;
+				font-size: 16px;
+			}
+
+			&-discount {
+				font-size: 12px;
+				text-decoration: line-through;
+				font-weight: 500;
+				opacity: 0.7;
+			}
+		}
+
+		.ProductCard__bottom {
+			padding: 8px;
+		}
+
+		h3 {
+			font-size: 14px;
+			height: 48px;
+			padding: 0 8px;
+			font-weight: 600;
+		}
+		.ProductCard__image-discount {
+			padding: 4px 6px;
+			border-radius: 5px;
+			font-size: 12px;
+		}
+
+		.ProductCard__image-popular {
+			padding: 4px 6px;
+			border-radius: 5px;
+			font-size: 12px;
+		}
+	}
+}

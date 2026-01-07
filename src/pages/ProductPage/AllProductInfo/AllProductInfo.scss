@@ -1,0 +1,293 @@
+.AllProductInfo {
+	padding: 60px 0;
+	background: var(--background);
+
+	&__container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 20px;
+	}
+
+	&__title {
+		font-size: 32px;
+		font-weight: 700;
+		color: var(--darkBlue);
+		text-align: center;
+		margin-bottom: 40px;
+	}
+
+	&__accordion {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+	}
+
+	&__section {
+		background: var(--white);
+		border-radius: 12px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		overflow: hidden;
+		transition: all 0.3s ease;
+
+		&:hover {
+			box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+		}
+	}
+
+	&__section-header {
+		width: 100%;
+		padding: 20px 25px;
+		background: none;
+		border: none;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		position: relative;
+
+		&:hover {
+			background: rgba(var(--darkBlue-rgb), 0.02);
+		}
+
+		&.active {
+			background: rgba(var(--darkBlue-rgb), 0.05);
+			border-bottom: 1px solid #eee;
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	&__section-left {
+		display: flex;
+		align-items: center;
+		gap: 15px;
+	}
+
+	&__section-icon {
+		font-size: 24px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		background: rgba(var(--lightGreen-rgb), 0.2);
+		border-radius: 50%;
+	}
+
+	&__section-title {
+		font-size: 20px;
+		font-weight: 600;
+		color: var(--darkBlue);
+	}
+
+	&__section-count {
+		font-size: 14px;
+		color: #666;
+		font-weight: 500;
+		background: rgba(var(--darkBlue-rgb), 0.1);
+		padding: 4px 8px;
+		border-radius: 12px;
+	}
+
+	&__section-arrow {
+		width: 24px;
+		height: 24px;
+		color: var(--darkBlue);
+		transition: transform 0.3s ease;
+
+		&.rotated {
+			transform: rotate(180deg);
+		}
+	}
+
+	&__section-content {
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.3s ease;
+
+		&.open {
+			max-height: 1000px;
+		}
+	}
+
+	&__characteristics {
+		padding: 0 25px 25px;
+	}
+
+	&__characteristic {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 20px;
+		padding: 15px 0;
+		border-bottom: 1px solid #f0f0f0;
+		align-items: center;
+
+		&:last-child {
+			border-bottom: none;
+		}
+
+		&:hover {
+			background: rgba(var(--lightGreen-rgb), 0.05);
+			margin: 0 -15px;
+			padding: 15px;
+			border-radius: 8px;
+		}
+	}
+
+	&__char-label {
+		font-size: 16px;
+		font-weight: 500;
+		color: var(--darkBlue);
+		line-height: 1.4;
+	}
+
+	&__char-value {
+		font-size: 16px;
+		font-weight: 600;
+		color: var(--black);
+		text-align: right;
+		line-height: 1.4;
+	}
+}
+
+// Адаптивность
+@media (max-width: 1024px) {
+	.AllProductInfo {
+		padding: 40px 0;
+
+		&__title {
+			font-size: 28px;
+			margin-bottom: 30px;
+		}
+
+		&__section-header {
+			padding: 18px 20px;
+		}
+
+		&__section-title {
+			font-size: 18px;
+		}
+
+		&__characteristics {
+			padding: 0 20px 20px;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.AllProductInfo {
+		padding: 30px 0;
+
+		&__container {
+			padding: 0;
+		}
+
+		&__title {
+			font-size: 20px;
+			text-align: left;
+			margin-bottom: 25px;
+		}
+
+		&__section-header {
+			padding: 15px 18px;
+		}
+
+		&__section-left {
+			gap: 12px;
+		}
+
+		&__section-icon {
+			width: 35px;
+			height: 35px;
+			font-size: 20px;
+		}
+
+		&__section-title {
+			font-size: 16px;
+			text-align: left;
+		}
+
+		&__section-count {
+			font-size: 12px;
+			padding: 3px 6px;
+		}
+
+		&__characteristics {
+			padding: 0 18px 18px;
+		}
+
+		&__characteristic {
+			grid-template-columns: 1fr;
+			gap: 8px;
+			padding: 12px 0;
+
+			&:hover {
+				margin: 0 -10px;
+				padding: 12px 10px;
+			}
+		}
+
+		&__char-label {
+			font-size: 14px;
+		}
+
+		&__char-value {
+			font-size: 14px;
+			text-align: left;
+			font-weight: 700;
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.AllProductInfo {
+		padding: 20px 0;
+
+		&__section-header {
+			padding: 12px 15px;
+		}
+
+		&__section-left {
+			gap: 10px;
+		}
+
+		&__section-icon {
+			width: 30px;
+			height: 30px;
+			font-size: 18px;
+		}
+
+		&__section-title {
+			font-size: 15px;
+		}
+
+		&__section-count {
+			font-size: 11px;
+			padding: 2px 5px;
+		}
+
+		&__characteristics {
+			padding: 0 15px 15px;
+		}
+
+		&__characteristic {
+			padding: 10px 0;
+
+			&:hover {
+				margin: 0 -8px;
+				padding: 10px 8px;
+			}
+		}
+
+		&__char-label {
+			font-size: 13px;
+		}
+
+		&__char-value {
+			font-size: 13px;
+		}
+	}
+}

@@ -1,0 +1,520 @@
+.StepDelivery {
+	max-width: 700px;
+	margin: 0 auto;
+	padding: 40px 20px;
+
+	&__header {
+		text-align: center;
+		margin-bottom: 40px;
+	}
+
+	&__title {
+		font-size: 28px;
+		font-weight: 700;
+		color: var(--darkBlue);
+		margin-bottom: 12px;
+	}
+
+	&__subtitle {
+		font-size: 16px;
+		color: var(--darkBlue);
+		opacity: 0.8;
+		line-height: 1.5;
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
+	}
+
+	&__section {
+		background: var(--white);
+		border-radius: 12px;
+		padding: 24px;
+		border: 1px solid #e9ecef;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+	}
+
+	&__section-title {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		font-size: 20px;
+		font-weight: 700;
+		color: var(--darkBlue);
+		margin-bottom: 24px;
+		padding-bottom: 12px;
+		border-bottom: 1px solid #e9ecef;
+
+		svg {
+			color: var(--lightGreen);
+		}
+	}
+
+	&__row {
+		display: grid;
+		grid-template-columns: 1fr 200px;
+		gap: 20px;
+
+		@media (max-width: 768px) {
+			grid-template-columns: 1fr;
+			gap: 0px;
+			margin-bottom: 20px;
+		}
+	}
+
+	&__field {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin-bottom: 20px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	&__label {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--darkBlue);
+
+		svg {
+			color: var(--darkBlue);
+			opacity: 0.7;
+		}
+	}
+
+	&__wrapper {
+		display: grid;
+		grid-template-columns: 1fr 150px;
+		gap: 20px;
+		align-items: start;
+
+		@media (max-width: 768px) {
+			grid-template-columns: 1fr;
+			gap: 0;
+		}
+
+		.house {
+			margin-bottom: 20px;
+
+			@media (max-width: 768px) {
+				margin-bottom: 20px;
+			}
+		}
+	}
+
+	&__input {
+		padding: 14px 16px;
+		border: 2px solid #e9ecef;
+		border-radius: 8px;
+		font-size: 16px;
+		font-family: inherit;
+		background: var(--background);
+		color: var(--darkBlue);
+		transition: all 0.3s ease;
+
+		&:focus {
+			outline: none;
+			border-color: var(--darkBlue);
+			box-shadow: 0 0 0 3px rgba(37, 39, 88, 0.1);
+		}
+
+		&::placeholder {
+			color: #6c757d;
+		}
+	}
+
+	&__hint {
+		font-size: 12px;
+		color: #6c757d;
+		font-style: italic;
+		margin-top: -4px;
+	}
+
+	&__error {
+		font-size: 13px;
+		color: #dc3545;
+		font-weight: 500;
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		margin-top: 4px;
+
+		&::before {
+			content: "⚠ ";
+			font-size: 12px;
+		}
+	}
+
+	// Стилі для радіокнопок оплати
+	&__payment-options {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	&__payment-option {
+		position: relative;
+
+		&.disabled {
+			opacity: 0.5;
+			pointer-events: none;
+		}
+	}
+
+	&__radio {
+		position: absolute;
+		opacity: 0;
+		width: 0;
+		height: 0;
+
+		&:checked + .StepDelivery__payment-label {
+			border-color: var(--lightGreen);
+			background: rgba(135, 225, 47, 0.05);
+			box-shadow: 0 0 0 1px var(--lightGreen);
+
+			&::before {
+				background: var(--lightGreen);
+				border-color: var(--lightGreen);
+			}
+
+			&::after {
+				opacity: 1;
+				transform: scale(1);
+			}
+		}
+	}
+
+	&__payment-label {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		padding: 16px 20px;
+		border: 2px solid #e9ecef;
+		border-radius: 8px;
+		background: var(--background);
+		cursor: pointer;
+		transition: all 0.3s ease;
+		position: relative;
+
+		&:hover:not(.disabled) {
+			border-color: var(--darkBlue);
+		}
+
+		&.disabled {
+			cursor: not-allowed;
+			opacity: 0.6;
+		}
+
+		// Кастомна радіокнопка
+		&::before {
+			content: "";
+			width: 20px;
+			height: 20px;
+			border: 2px solid #e9ecef;
+			border-radius: 50%;
+			background: var(--white);
+			transition: all 0.3s ease;
+			flex-shrink: 0;
+		}
+
+		// Точка всередині радіокнопки
+		&::after {
+			content: "";
+			position: absolute;
+			left: 26px;
+			top: 50%;
+			transform: translateY(-50%) scale(0);
+			width: 8px;
+			height: 8px;
+			background: var(--white);
+			border-radius: 50%;
+			opacity: 0;
+			transition: all 0.2s ease;
+		}
+	}
+
+	&__payment-info {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	&__payment-title {
+		font-size: 16px;
+		font-weight: 600;
+		color: var(--darkBlue);
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	&__coming-soon {
+		font-size: 12px;
+		font-weight: 500;
+		color: #6c757d;
+		background: #f8f9fa;
+		padding: 2px 6px;
+		border-radius: 4px;
+	}
+
+	&__payment-description {
+		font-size: 14px;
+		color: #6c757d;
+		line-height: 1.4;
+	}
+
+	// Стилі для секції кредитних інформацій
+	&__credit-section {
+		animation: slideInUp 0.4s ease forwards;
+		border: 2px solid var(--lightGreen);
+		background: linear-gradient(135deg, rgba(135, 225, 47, 0.03) 0%, rgba(135, 225, 47, 0.01) 100%);
+	}
+
+	&__credit-info {
+		font-size: 14px;
+		color: #6c757d;
+		line-height: 1.6;
+		margin-bottom: 24px;
+		padding: 12px 16px;
+		background: rgba(135, 225, 47, 0.05);
+		border-left: 3px solid var(--lightGreen);
+		border-radius: 4px;
+	}
+
+	// Індикатор платоспроможності
+	&__affordability {
+		margin-top: 24px;
+		padding-top: 20px;
+		border-top: 1px solid #e9ecef;
+	}
+
+	&__affordability-indicator {
+		padding: 16px 20px;
+		border-radius: 8px;
+		border: 2px solid;
+		
+		&.positive {
+			background: rgba(40, 167, 69, 0.05);
+			border-color: #28a745;
+
+			.StepDelivery__affordability-title {
+				color: #28a745;
+			}
+		}
+
+		&.warning {
+			background: rgba(255, 193, 7, 0.05);
+			border-color: #ffc107;
+
+			.StepDelivery__affordability-title {
+				color: #d39e00;
+			}
+		}
+	}
+
+	&__affordability-title {
+		font-size: 16px;
+		font-weight: 700;
+		margin-bottom: 8px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	&__affordability-text {
+		font-size: 14px;
+		color: var(--darkBlue);
+		margin-bottom: 4px;
+
+		strong {
+			font-weight: 700;
+			font-size: 16px;
+		}
+	}
+
+	&__affordability-warning {
+		font-size: 13px;
+		color: #6c757d;
+		margin-top: 8px;
+		font-style: italic;
+	}
+
+	// Кнопки навігації
+	&__actions {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 20px;
+		margin-top: 20px;
+
+		@media (max-width: 768px) {
+			flex-direction: column-reverse;
+			gap: 16px;
+		}
+	}
+
+	&__back-btn {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		background: transparent;
+		color: var(--darkBlue);
+		border: 2px solid #e9ecef;
+		padding: 14px 24px;
+		border-radius: 8px;
+		font-size: 15px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+
+		&:hover {
+			border-color: var(--darkBlue);
+			background: rgba(37, 39, 88, 0.05);
+		}
+
+		@media (max-width: 768px) {
+			width: 100%;
+			justify-content: center;
+		}
+	}
+
+	&__next-btn {
+		background: var(--darkBlue);
+		color: var(--white);
+		border: none;
+		padding: 16px 32px;
+		border-radius: 8px;
+		font-size: 16px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		min-width: 220px;
+
+		&:hover:not(:disabled) {
+			background: var(--lightGreen);
+			transform: translateY(-2px);
+			box-shadow: 0 4px 12px rgba(135, 225, 47, 0.3);
+		}
+
+		&:active:not(:disabled) {
+			transform: translateY(0);
+		}
+
+		&:disabled {
+			background: #6c757d;
+			cursor: not-allowed;
+			opacity: 0.6;
+			transform: none;
+			box-shadow: none;
+		}
+
+		@media (max-width: 768px) {
+			width: 100%;
+			min-width: unset;
+		}
+	}
+}
+
+// Адаптивність для планшетів
+@media (max-width: 768px) {
+	.StepDelivery {
+		padding: 30px 15px;
+
+		&__title {
+			font-size: 24px;
+		}
+
+		&__subtitle {
+			font-size: 15px;
+		}
+
+		&__section {
+			padding: 20px;
+		}
+
+		&__section-title {
+			font-size: 18px;
+		}
+
+		&__row {
+			grid-template-columns: 1fr !important;
+		}
+	}
+}
+
+// Адаптивність для мобільних
+@media (max-width: 480px) {
+	.StepDelivery {
+		padding: 20px 0;
+
+		&__title {
+			font-size: 22px;
+		}
+
+		&__subtitle {
+			font-size: 14px;
+		}
+
+		&__section {
+			padding: 16px;
+		}
+
+		&__section-title {
+			font-size: 17px;
+		}
+
+		&__input {
+			padding: 12px 14px;
+			font-size: 16px;
+		}
+
+		&__payment-label {
+			padding: 14px 16px;
+		}
+
+		&__payment-title {
+			font-size: 15px;
+		}
+
+		&__payment-description {
+			font-size: 13px;
+		}
+	}
+}
+
+// Анімації
+@keyframes slideInUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.StepDelivery {
+	animation: slideInUp 0.5s ease forwards;
+}
+
+.StepDelivery__section {
+	animation: slideInUp 0.5s ease forwards;
+
+	&:nth-child(1) {
+		animation-delay: 0.1s;
+	}
+	&:nth-child(2) {
+		animation-delay: 0.2s;
+	}
+	&:nth-child(3) {
+		animation-delay: 0.3s;
+	}
+}

@@ -1,0 +1,609 @@
+// src/components/BlogContent/BlogContent.scss
+// Стили для контента статьи блога
+
+.BlogContent {
+	max-width: 800px;
+	margin: 0 auto;
+
+	&__header {
+		margin-bottom: 48px;
+		text-align: center;
+	}
+
+	&__meta {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 24px;
+		margin-bottom: 24px;
+		flex-wrap: wrap;
+	}
+
+	&__date {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		color: var(--darkGray);
+		font-size: 14px;
+		font-weight: 500;
+
+		&::before {
+			content: "";
+			width: 4px;
+			height: 4px;
+			background: var(--lightGreen);
+			border-radius: 50%;
+		}
+	}
+
+	&__author {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		color: var(--darkGray);
+		font-size: 14px;
+		font-weight: 500;
+
+		&::before {
+			content: "";
+			width: 4px;
+			height: 4px;
+			background: var(--darkBlue);
+			border-radius: 50%;
+		}
+	}
+
+	&__categories {
+		display: flex;
+		gap: 8px;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+	}
+
+	&__category {
+		background: var(--lightGreen);
+		color: var(--white);
+		padding: 6px 16px;
+		border-radius: 24px;
+		font-size: 12px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	&__title {
+		font-size: 48px;
+		font-weight: 700;
+		line-height: 1.2;
+		color: var(--darkBlue);
+		margin: 0 0 24px 0;
+	}
+
+	&__description {
+		font-size: 20px;
+		line-height: 1.6;
+		color: var(--darkGray);
+		margin-bottom: 32px;
+		font-weight: 400;
+	}
+
+	&__hero-image {
+		margin: 32px 0 0 0;
+		border-radius: 16px;
+		overflow: hidden;
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+	}
+
+	&__hero-img {
+		width: 100%;
+		height: auto;
+		object-fit: cover;
+		display: block;
+	}
+
+	&__body {
+		margin-bottom: 48px;
+	}
+
+	// Стили для markdown контента
+	&__prose {
+		line-height: 1.8;
+		color: var(--textColor);
+
+		// Заголовки
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			color: var(--darkBlue);
+			font-weight: 600;
+			margin: 32px 0 16px 0;
+			line-height: 1.3;
+		}
+
+		h1 {
+			font-size: 36px;
+		}
+		h2 {
+			font-size: 28px;
+		}
+		h3 {
+			font-size: 24px;
+		}
+		h4 {
+			font-size: 20px;
+		}
+		h5 {
+			font-size: 18px;
+		}
+		h6 {
+			font-size: 16px;
+		}
+
+		// Параграфы
+		p {
+			margin: 0 0 24px 0;
+			font-size: 16px;
+			line-height: 1.8;
+		}
+
+		// Ссылки
+		a {
+			color: var(--lightGreen);
+			text-decoration: none;
+			border-bottom: 1px solid transparent;
+			transition: all 0.3s ease;
+
+			&:hover {
+				border-bottom-color: var(--lightGreen);
+			}
+		}
+
+		// Списки
+		ul,
+		ol {
+			margin: 0 0 24px 0;
+			padding-left: 24px;
+
+			li {
+				margin-bottom: 8px;
+				line-height: 1.7;
+			}
+		}
+
+		ul li {
+			position: relative;
+
+			&::before {
+				content: "";
+				position: absolute;
+				left: -16px;
+				top: 12px;
+				width: 4px;
+				height: 4px;
+				background: var(--lightGreen);
+				border-radius: 50%;
+			}
+		}
+
+		// Цитаты
+		blockquote {
+			margin: 32px 0;
+			padding: 24px 32px;
+			background: linear-gradient(135deg, var(--lightGray) 0%, #f8f9fa 100%);
+			border-left: 4px solid var(--lightGreen);
+			border-radius: 0 12px 12px 0;
+			font-style: italic;
+			font-size: 18px;
+			line-height: 1.6;
+			color: var(--darkBlue);
+
+			p {
+				margin: 0;
+			}
+		}
+
+		// Код
+		code {
+			background: var(--lightGray);
+			padding: 4px 8px;
+			border-radius: 6px;
+			font-family: "Monaco", "Menlo", monospace;
+			font-size: 14px;
+			color: var(--darkBlue);
+		}
+
+		pre {
+			background: var(--darkBlue);
+			color: var(--white);
+			padding: 24px;
+			border-radius: 12px;
+			overflow-x: auto;
+			margin: 24px 0;
+			font-family: "Monaco", "Menlo", monospace;
+			font-size: 14px;
+			line-height: 1.5;
+
+			code {
+				background: transparent;
+				padding: 0;
+				color: inherit;
+			}
+		}
+
+		// Изображения
+		img {
+			max-width: 100%;
+			height: auto;
+			border-radius: 12px;
+			margin: 24px 0;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+		}
+
+		// Таблицы
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 32px 0;
+			background: var(--white);
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+		}
+
+		th,
+		td {
+			padding: 16px;
+			text-align: left;
+			border-bottom: 1px solid var(--lightGray);
+		}
+
+		th {
+			background: var(--darkBlue);
+			color: var(--white);
+			font-weight: 600;
+			text-transform: uppercase;
+			font-size: 14px;
+			letter-spacing: 0.5px;
+		}
+
+		tr:last-child td {
+			border-bottom: none;
+		}
+
+		tr:nth-child(even) td {
+			background: #f8f9fa;
+		}
+
+		// Разделители
+		hr {
+			border: none;
+			height: 1px;
+			background: linear-gradient(90deg, transparent, var(--darkGray), transparent);
+			margin: 48px 0;
+		}
+
+		// Выделение текста
+		strong,
+		b {
+			font-weight: 600;
+			color: var(--darkBlue);
+		}
+
+		em,
+		i {
+			font-style: italic;
+			color: var(--darkGray);
+		}
+
+		// Подписи к изображениям
+		figcaption {
+			text-align: center;
+			font-style: italic;
+			color: var(--darkGray);
+			font-size: 14px;
+			margin-top: 8px;
+		}
+	}
+
+	&__footer {
+		border-top: 1px solid var(--lightGray);
+		padding-top: 32px;
+		margin-top: 48px;
+	}
+
+	&__tags {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-bottom: 32px;
+		flex-wrap: wrap;
+	}
+
+	&__tags-label {
+		font-weight: 600;
+		color: var(--darkBlue);
+		font-size: 14px;
+	}
+
+	&__tag {
+		color: var(--lightGreen);
+		font-size: 14px;
+		font-weight: 500;
+		transition: color 0.3s ease;
+
+		&:hover {
+			color: var(--darkBlue);
+		}
+	}
+
+	&__author-info {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		padding: 24px;
+		background: linear-gradient(135deg, var(--lightGray) 0%, #f8f9fa 100%);
+		border-radius: 16px;
+	}
+
+	&__author-avatar {
+		width: 60px;
+		height: 60px;
+		border-radius: 50%;
+		background: var(--lightGreen);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	&__author-initials {
+		color: var(--white);
+		font-size: 24px;
+		font-weight: 600;
+	}
+
+	&__author-details {
+		flex-grow: 1;
+	}
+
+	&__author-name {
+		font-size: 18px;
+		font-weight: 600;
+		color: var(--darkBlue);
+		margin-bottom: 4px;
+	}
+
+	&__author-role {
+		color: var(--darkGray);
+		font-size: 14px;
+	}
+}
+
+// Адаптивность
+@media (max-width: 1200px) {
+	.BlogContent {
+		&__title {
+			font-size: 40px;
+		}
+
+		&__description {
+			font-size: 18px;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.BlogContent {
+		&__header {
+			margin-bottom: 32px;
+		}
+
+		&__meta {
+			gap: 16px;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		&__title {
+			font-size: 32px;
+			text-align: left;
+		}
+
+		&__description {
+			font-size: 16px;
+			text-align: left;
+		}
+
+		&__prose {
+			h1 {
+				font-size: 28px;
+			}
+			h2 {
+				font-size: 24px;
+			}
+			h3 {
+				font-size: 20px;
+			}
+			h4 {
+				font-size: 18px;
+			}
+			h5 {
+				font-size: 16px;
+			}
+			h6 {
+				font-size: 15px;
+			}
+
+			blockquote {
+				margin: 24px 0;
+				padding: 16px 20px;
+				font-size: 16px;
+			}
+
+			pre {
+				padding: 16px;
+				font-size: 13px;
+				overflow-x: scroll;
+			}
+		}
+
+		&__author-info {
+			flex-direction: column;
+			text-align: center;
+			gap: 12px;
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.BlogContent {
+		&__title {
+			font-size: 28px;
+		}
+
+		&__description {
+			font-size: 15px;
+		}
+
+		&__categories {
+			gap: 6px;
+		}
+
+		&__category {
+			padding: 4px 12px;
+			font-size: 11px;
+		}
+
+		&__prose {
+			font-size: 15px;
+
+			h1 {
+				font-size: 24px;
+			}
+			h2 {
+				font-size: 20px;
+			}
+			h3 {
+				font-size: 18px;
+			}
+
+			p {
+				margin-bottom: 20px;
+			}
+
+			ul,
+			ol {
+				padding-left: 20px;
+			}
+
+			blockquote {
+				padding: 12px 16px;
+				font-size: 15px;
+			}
+
+			pre {
+				padding: 12px;
+				font-size: 12px;
+			}
+
+			table {
+				font-size: 14px;
+			}
+
+			th,
+			td {
+				padding: 12px;
+			}
+		}
+
+		&__tags {
+			gap: 8px;
+		}
+
+		&__tag {
+			font-size: 13px;
+		}
+	}
+}
+
+// Анимации появления контента
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.BlogContent {
+	&__header {
+		animation: fadeInUp 0.6s ease forwards;
+	}
+
+	&__body {
+		animation: fadeInUp 0.8s ease 0.2s forwards;
+		opacity: 0;
+		animation-fill-mode: forwards;
+	}
+
+	&__footer {
+		animation: fadeInUp 0.6s ease 0.4s forwards;
+		opacity: 0;
+		animation-fill-mode: forwards;
+	}
+}
+
+// Улучшения для чтения
+.BlogContent__prose {
+	// Лучшая читаемость
+	font-feature-settings:
+		"kern" 1,
+		"liga" 1,
+		"calt" 1;
+	text-rendering: optimizeLegibility;
+
+	// Плавные переходы для интерактивных элементов
+	a,
+	code {
+		transition: all 0.3s ease;
+	}
+
+	// Улучшенные отступы между элементами
+	> * + * {
+		margin-top: 24px;
+	}
+
+	> h1 + *,
+	> h2 + *,
+	> h3 + *,
+	> h4 + *,
+	> h5 + *,
+	> h6 + * {
+		margin-top: 16px;
+	}
+}
+
+// Темная тема (если понадобится)
+@media (prefers-color-scheme: dark) {
+	.BlogContent {
+		&__prose {
+			pre {
+				background: #1a1a1a;
+			}
+
+			code {
+				background: rgba(255, 255, 255, 0.1);
+			}
+
+			blockquote {
+				background: rgba(0, 0, 0, 0.05);
+			}
+		}
+	}
+}

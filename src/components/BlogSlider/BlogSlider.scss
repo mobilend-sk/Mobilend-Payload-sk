@@ -1,0 +1,433 @@
+// src/components/BlogSlider/BlogSlider.scss
+// Стили для слайдера блога в стиле проекта
+
+.BlogSlider {
+	padding: 80px 0;
+	background: linear-gradient(135deg, #f8f9fa 0%, var(--white) 100%);
+	position: relative;
+	overflow: hidden;
+
+	&__header {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		margin-bottom: 48px;
+		gap: 32px;
+	}
+
+	&__titles {
+		flex-grow: 1;
+	}
+
+	&__title {
+		font-size: 36px;
+		font-weight: 700;
+		color: var(--darkBlue);
+		margin: 0 0 8px 0;
+		line-height: 1.2;
+	}
+
+	&__subtitle {
+		font-size: 18px;
+		color: var(--darkGray);
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	&__controls {
+		display: flex;
+		gap: 12px;
+		align-items: center;
+	}
+
+	&__nav {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background: var(--white);
+		border: 2px solid var(--lightGray);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		color: var(--darkGray);
+
+		&:hover {
+			background: var(--lightGreen);
+			border-color: var(--lightGreen);
+			color: var(--white);
+			transform: scale(1.05);
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+
+		&.swiper-button-disabled {
+			opacity: 0.3;
+			cursor: not-allowed;
+			transform: none;
+
+			&:hover {
+				background: var(--white);
+				border-color: var(--lightGray);
+				color: var(--darkGray);
+			}
+		}
+	}
+
+	&__slider {
+		position: relative;
+		margin-bottom: 32px;
+
+		// Переопределяем стили Swiper
+		.swiper {
+			padding-bottom: 48px;
+		}
+
+		.swiper-slide {
+			height: auto;
+			display: flex;
+		}
+
+		// Кастомная пагинация
+		.swiper-pagination {
+			position: relative;
+			bottom: 0;
+			display: flex;
+			justify-content: center;
+			gap: 8px;
+			margin-top: 32px;
+
+			.swiper-pagination-bullet {
+				width: 12px;
+				height: 12px;
+				background: var(--lightGray);
+				opacity: 1;
+				border-radius: 50%;
+				transition: all 0.3s ease;
+
+				&.swiper-pagination-bullet-active {
+					background: var(--lightGreen);
+					transform: scale(1.2);
+				}
+			}
+		}
+	}
+
+	&__pagination {
+		display: flex;
+		justify-content: center;
+		gap: 8px;
+		margin-top: 32px;
+	}
+
+	&__footer {
+		text-align: center;
+		margin-top: 32px;
+	}
+
+	&__view-all {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 16px 32px;
+		background: var(--lightGreen);
+		color: var(--white);
+		text-decoration: none;
+		border-radius: 50px;
+		font-weight: 600;
+		font-size: 16px;
+		transition: all 0.3s ease;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+
+		&:hover {
+			background: var(--darkBlue);
+			transform: translateY(-2px);
+			box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+		}
+
+		&:active {
+			transform: translateY(0);
+		}
+	}
+}
+
+// Варианты слайдера
+.BlogSlider {
+	// Компактный вариант для футера или боковых блоков
+	&--compact {
+		padding: 48px 0;
+
+		.BlogSlider__title {
+			font-size: 28px;
+		}
+
+		.BlogSlider__subtitle {
+			font-size: 16px;
+		}
+
+		.BlogSlider__header {
+			margin-bottom: 32px;
+		}
+	}
+
+	// Большой вариант для главной страницы
+	&--large {
+		padding: 100px 0;
+		background: linear-gradient(135deg, var(--darkBlue) 0%, #1a237e 100%);
+		color: var(--white);
+
+		.BlogSlider__title {
+			color: var(--white);
+			font-size: 42px;
+		}
+
+		.BlogSlider__subtitle {
+			color: rgba(255, 255, 255, 0.8);
+		}
+
+		.BlogSlider__nav {
+			background: rgba(255, 255, 255, 0.1);
+			border-color: rgba(255, 255, 255, 0.2);
+			color: var(--white);
+
+			&:hover {
+				background: var(--lightGreen);
+				border-color: var(--lightGreen);
+			}
+		}
+
+		.swiper-pagination-bullet {
+			background: rgba(255, 255, 255, 0.3);
+
+			&.swiper-pagination-bullet-active {
+				background: var(--lightGreen);
+			}
+		}
+	}
+
+	// Минимальный вариант
+	&--minimal {
+		padding: 40px 0;
+		background: transparent;
+
+		.BlogSlider__header {
+			margin-bottom: 24px;
+		}
+
+		.BlogSlider__title {
+			font-size: 24px;
+		}
+
+		.BlogSlider__controls {
+			display: none;
+		}
+	}
+}
+
+// Адаптивность
+@media (max-width: 1200px) {
+	.BlogSlider {
+		padding: 60px 0;
+
+		&__title {
+			font-size: 32px;
+		}
+
+		&__subtitle {
+			font-size: 16px;
+		}
+
+		&__header {
+			margin-bottom: 40px;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.BlogSlider {
+		padding: 48px 0;
+
+		&__header {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 24px;
+			margin-bottom: 32px;
+		}
+
+		&__title {
+			font-size: 28px;
+		}
+
+		&__subtitle {
+			font-size: 15px;
+		}
+
+		&__controls {
+			align-self: flex-end;
+		}
+
+		&__nav {
+			width: 44px;
+			height: 44px;
+		}
+
+		&__slider {
+			.swiper {
+				padding-bottom: 40px;
+			}
+
+			.swiper-pagination {
+				margin-top: 24px;
+			}
+		}
+
+		&__view-all {
+			padding: 14px 28px;
+			font-size: 14px;
+		}
+
+		// Варианты для мобилки
+		&--large {
+			padding: 60px 0;
+
+			.BlogSlider__title {
+				font-size: 32px;
+			}
+		}
+
+		&--compact {
+			padding: 32px 0;
+
+			.BlogSlider__title {
+				font-size: 24px;
+			}
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.BlogSlider {
+		&__header {
+			gap: 16px;
+			margin-bottom: 24px;
+		}
+
+		&__title {
+			font-size: 24px;
+		}
+
+		&__subtitle {
+			font-size: 14px;
+		}
+
+		&__nav {
+			width: 40px;
+			height: 40px;
+
+			svg {
+				width: 16px;
+				height: 16px;
+			}
+		}
+
+		&__slider {
+			.swiper {
+				padding-bottom: 32px;
+			}
+
+			.swiper-pagination {
+				margin-top: 16px;
+
+				.swiper-pagination-bullet {
+					width: 10px;
+					height: 10px;
+				}
+			}
+		}
+
+		&__view-all {
+			padding: 12px 24px;
+			font-size: 13px;
+			border-radius: 40px;
+
+			svg {
+				width: 14px;
+				height: 14px;
+			}
+		}
+	}
+}
+
+// Анимации загрузки
+@keyframes slideInUp {
+	from {
+		opacity: 0;
+		transform: translateY(40px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.BlogSlider {
+	&__header {
+		animation: slideInUp 0.6s ease forwards;
+	}
+
+	&__slider {
+		animation: slideInUp 0.8s ease 0.2s forwards;
+		opacity: 0;
+		animation-fill-mode: forwards;
+	}
+
+	&__footer {
+		animation: slideInUp 0.6s ease 0.4s forwards;
+		opacity: 0;
+		animation-fill-mode: forwards;
+	}
+}
+
+// Улучшения производительности
+.BlogSlider {
+	.swiper-slide {
+		// GPU-ускорение для плавной анимации
+		transform: translateZ(0);
+		backface-visibility: hidden;
+	}
+
+	// Оптимизация для touch устройств
+	.swiper {
+		touch-action: pan-y;
+	}
+}
+
+// Состояние загрузки
+.BlogSlider {
+	&--loading {
+		.BlogSlider__slider {
+			opacity: 0.7;
+			pointer-events: none;
+		}
+
+		.BlogSlider__nav {
+			opacity: 0.3;
+			pointer-events: none;
+		}
+	}
+}
+
+// Фокус для доступности
+.BlogSlider__nav:focus-visible {
+	outline: 2px solid var(--lightGreen);
+	outline-offset: 2px;
+}
+
+.BlogSlider__view-all:focus-visible {
+	outline: 2px solid var(--lightGreen);
+	outline-offset: 2px;
+}

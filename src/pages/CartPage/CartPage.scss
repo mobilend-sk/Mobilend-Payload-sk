@@ -1,0 +1,278 @@
+.CartPage {
+	padding: 40px 0;
+	min-height: 70vh;
+
+	&__loading {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 100px 20px;
+		gap: 20px;
+		color: var(--darkBlue);
+
+		svg {
+			opacity: 0.5;
+		}
+
+		p {
+			font-size: 18px;
+			margin: 0;
+		}
+	}
+
+	&__breadcrumbs {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin-bottom: 30px;
+		font-size: 14px;
+	}
+
+	&__breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		color: var(--darkBlue);
+		text-decoration: none;
+		transition: color 0.2s;
+
+		&:hover {
+			color: var(--lightGreen);
+		}
+
+		&--current {
+			color: #7f8c8d;
+			font-weight: 500;
+		}
+	}
+
+	&__breadcrumb-separator {
+		color: #bbb;
+	}
+
+	&__header {
+		margin-bottom: 40px;
+		text-align: center;
+
+		@media (max-width: 768px) {
+			margin-bottom: 30px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+	}
+
+	&__title {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+		font-size: 32px;
+		font-weight: 700;
+		color: var(--darkBlue);
+		margin: 0 0 8px 0;
+
+		@media (max-width: 768px) {
+			font-size: 24px;
+			margin-bottom: 0;
+		}
+	}
+
+	&__subtitle {
+		font-size: 16px;
+		color: #7f8c8d;
+		margin: 0;
+	}
+
+	// Пустая корзина
+	&__empty {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 80px 20px;
+		text-align: center;
+		gap: 20px;
+
+		@media (max-width: 768px) {
+			padding: 60px 20px;
+		}
+	}
+
+	&__empty-icon {
+		opacity: 0.3;
+		color: var(--darkBlue);
+	}
+
+	&__empty h2 {
+		font-size: 24px;
+		color: var(--darkBlue);
+		margin: 0;
+
+		@media (max-width: 768px) {
+			font-size: 20px;
+		}
+	}
+
+	&__empty p {
+		font-size: 16px;
+		color: #7f8c8d;
+		margin: 0;
+		max-width: 400px;
+
+		@media (max-width: 768px) {
+			font-size: 14px;
+		}
+	}
+
+	&__empty-button {
+		padding: 12px 24px;
+		background: var(--darkBlue);
+		color: white;
+		text-decoration: none;
+		border-radius: 6px;
+		font-weight: 600;
+		transition: all 0.2s;
+
+		&:hover {
+			background: var(--lightGreen);
+			transform: translateY(-2px);
+		}
+	}
+
+	// Контент корзины
+	&__content {
+		display: grid;
+		grid-template-columns: 1fr 350px;
+		gap: 40px;
+		align-items: start;
+
+		@media (max-width: 1024px) {
+			grid-template-columns: 1fr 300px;
+			gap: 30px;
+		}
+
+		@media (max-width: 768px) {
+			grid-template-columns: 1fr;
+			gap: 30px;
+		}
+	}
+
+	&__items {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	// Блок с итогами
+	&__summary {
+		position: sticky;
+		top: 20px;
+	}
+
+	&__summary-card {
+		background: #f8f9fa;
+		border-radius: 12px;
+		padding: 24px;
+		border: 1px solid #e9ecef;
+
+		h3 {
+			margin: 0 0 20px 0;
+			font-size: 20px;
+			color: var(--darkBlue);
+		}
+	}
+
+	&__summary-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 12px 0;
+		font-size: 16px;
+
+		&:first-child {
+			padding-top: 0;
+		}
+
+		&:last-child {
+			padding-bottom: 0;
+		}
+	}
+
+	&__summary-divider {
+		height: 1px;
+		background: #e9ecef;
+		margin: 16px 0;
+	}
+
+	&__summary-total {
+		font-size: 18px;
+		font-weight: 700;
+		color: var(--darkBlue);
+	}
+
+	&__summary-actions {
+		margin-top: 24px;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	&__checkout-btn {
+		width: 100%;
+		padding: 14px 20px;
+		background: var(--darkBlue);
+		color: white;
+		border: none;
+		border-radius: 6px;
+		font-size: 16px;
+		font-weight: 600;
+		cursor: pointer;
+		text-align: center;
+		transition: all 0.2s;
+
+		&:hover {
+			background: var(--lightGreen);
+			transform: translateY(-2px);
+		}
+
+		&:active {
+			transform: translateY(0);
+		}
+	}
+
+	&__clear-btn {
+		width: 100%;
+		padding: 12px 20px;
+		background: transparent;
+		color: #dc3545;
+		border: 1px solid #dc3545;
+		border-radius: 6px;
+		font-size: 14px;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.2s;
+
+		&:hover {
+			background: #dc3545;
+			color: white;
+		}
+	}
+}
+
+// Адаптивные стили
+@media (max-width: 768px) {
+	.CartPage {
+		padding: 20px 0;
+
+		&__summary-card {
+			padding: 20px;
+		}
+
+		&__checkout-btn {
+			padding: 12px 20px;
+			font-size: 14px;
+		}
+	}
+}
