@@ -276,16 +276,16 @@ export interface Product {
    */
   shortInfo?: string | null;
   /**
-   * Виберіть папку для організації зображень
+   * Базовий URL для зображень (автогенерується)
    */
-  imageFolder?: (string | null) | MediaFolder;
+  baseImageUrl?: string | null;
   /**
-   * Головне зображення продукту
+   * Назва головного зображення (автогенерується)
    */
-  mainImage: string | Media;
+  mainImage?: string | null;
   images?:
     | {
-        image: string | Media;
+        filename?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -373,70 +373,18 @@ export interface Blog {
   title: string;
   description: string;
   date: string;
-  /**
-   * Automaticky generovaný z názvu
-   */
   slug: string;
-  /**
-   * Nahrajte hlavný obrázok článku
-   */
-  image: string | Media;
-  gallery?:
-    | {
-        image: string | Media;
-        caption?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Vyberte jednu alebo viac kategórií
-   */
-  categories: string[];
+  image: string;
+  categories: {
+    category: string;
+    id?: string | null;
+  }[];
   featured?: boolean | null;
-  /**
-   * Hlavný obsah článku s formátovaním
-   */
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  author?: {
-    name?: string | null;
-    avatar?: (string | null) | Media;
-    bio?: string | null;
-  };
-  /**
-   * Odhadovaný čas potrebný na prečítanie
-   */
-  readTime?: number | null;
+  content: string;
   seo?: {
-    /**
-     * Ak prázdne, použije sa hlavný nadpis
-     */
     metaTitle?: string | null;
-    /**
-     * Ak prázdny, použije sa hlavný popis
-     */
     metaDescription?: string | null;
-    /**
-     * Oddelené čiarkami
-     */
     keywords?: string | null;
-    /**
-     * Pre sociálne siete (ak prázdne, použije sa hlavný obrázok)
-     */
-    ogImage?: (string | null) | Media;
   };
   updatedAt: string;
   createdAt: string;
@@ -782,12 +730,12 @@ export interface ProductsSelect<T extends boolean = true> {
   popular?: T;
   productLink?: T;
   shortInfo?: T;
-  imageFolder?: T;
+  baseImageUrl?: T;
   mainImage?: T;
   images?:
     | T
     | {
-        image?: T;
+        filename?: T;
         id?: T;
       };
   mainCharacteristics?:
@@ -875,31 +823,20 @@ export interface BlogSelect<T extends boolean = true> {
   date?: T;
   slug?: T;
   image?: T;
-  gallery?:
+  categories?:
     | T
     | {
-        image?: T;
-        caption?: T;
+        category?: T;
         id?: T;
       };
-  categories?: T;
   featured?: T;
   content?: T;
-  author?:
-    | T
-    | {
-        name?: T;
-        avatar?: T;
-        bio?: T;
-      };
-  readTime?: T;
   seo?:
     | T
     | {
         metaTitle?: T;
         metaDescription?: T;
         keywords?: T;
-        ogImage?: T;
       };
   updatedAt?: T;
   createdAt?: T;

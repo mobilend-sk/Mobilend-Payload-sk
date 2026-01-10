@@ -9,6 +9,13 @@ const generateSlug = (phone: string, model: string, memory: string): string => {
     .replace(/^-+|-+$/g, '')
 }
 
+// Функція для генерації назви головного зображення
+const generateMainImage = (phone: string, color: string): string => {
+  const phoneName = phone.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()
+  const colorName = color.replace('#', '').toLowerCase()
+  return `${phoneName}-${colorName}-main.jpg`
+}
+
 export const Products: CollectionConfig = {
   slug: 'products',
   admin: {
@@ -26,6 +33,18 @@ export const Products: CollectionConfig = {
           if (data.phone && data.model && data.memory) {
             data.productLink = generateSlug(data.phone, data.model, data.memory)
           }
+        }
+
+        // Автогенерація mainImage
+        if (operation === 'create' || !data.mainImage) {
+          if (data.phone && data.color) {
+            data.mainImage = generateMainImage(data.phone, data.color)
+          }
+        }
+
+        // Автогенерація baseImageUrl якщо не вказано
+        if (!data.baseImageUrl) {
+          data.baseImageUrl = '/images/products'
         }
 
         return data
@@ -131,44 +150,34 @@ export const Products: CollectionConfig = {
         description: 'Короткий опис продукту',
       },
     },
-    // Папка для зображень
     {
-      name: 'imageFolder',
-      type: 'relationship',
-      relationTo: 'media-folders',
-      label: 'Папка для зображень',
+      name: 'baseImageUrl',
+      type: 'text',
       admin: {
-        description: 'Виберіть папку для організації зображень',
+        description: 'Базовий URL для зображень (автогенерується)',
       },
     },
-    // Головне зображення
     {
       name: 'mainImage',
-      type: 'upload',
-      relationTo: 'media',
-      required: true,
+      type: 'text',
       admin: {
-        description: 'Головне зображення продукту',
+        description: 'Назва головного зображення (автогенерується)',
+        readOnly: true,
       },
     },
-    // Додаткові зображення
     {
       name: 'images',
       type: 'array',
-      label: 'Додаткові зображення',
       fields: [
         {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          required: true,
+          name: 'filename',
+          type: 'text',
         },
       ],
     },
     {
       name: 'mainCharacteristics',
       type: 'array',
-      label: 'Основні характеристики',
       fields: [
         {
           name: 'label',
@@ -187,7 +196,6 @@ export const Products: CollectionConfig = {
     {
       name: 'display',
       type: 'array',
-      label: 'Дисплей',
       fields: [
         {
           name: 'label',
@@ -206,7 +214,6 @@ export const Products: CollectionConfig = {
     {
       name: 'dimensions',
       type: 'array',
-      label: 'Розміри',
       fields: [
         {
           name: 'label',
@@ -225,7 +232,6 @@ export const Products: CollectionConfig = {
     {
       name: 'camera',
       type: 'array',
-      label: 'Камера',
       fields: [
         {
           name: 'label',
@@ -244,7 +250,6 @@ export const Products: CollectionConfig = {
     {
       name: 'features',
       type: 'array',
-      label: 'Особливості',
       fields: [
         {
           name: 'label',
@@ -263,7 +268,6 @@ export const Products: CollectionConfig = {
     {
       name: 'battery',
       type: 'array',
-      label: 'Батарея',
       fields: [
         {
           name: 'label',
@@ -282,7 +286,6 @@ export const Products: CollectionConfig = {
     {
       name: 'hardware',
       type: 'array',
-      label: 'Апаратне забезпечення',
       fields: [
         {
           name: 'label',
@@ -301,7 +304,6 @@ export const Products: CollectionConfig = {
     {
       name: 'connectivity',
       type: 'array',
-      label: "Зв'язок",
       fields: [
         {
           name: 'label',
@@ -320,7 +322,6 @@ export const Products: CollectionConfig = {
     {
       name: 'energy',
       type: 'array',
-      label: 'Енергоспоживання',
       fields: [
         {
           name: 'label',
