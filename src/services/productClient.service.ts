@@ -30,17 +30,29 @@ interface Product {
 }
 
 class ProductService {
-	private apiUrl: string
+	private baseUrl: string
 
 	constructor() {
-		// Base API URL для Payload
-		this.apiUrl = '/api/products'
+		// КРИТИЧНО: Використовуємо змінні оточення!
+		// В dev: http://localhost:3000
+		// В production: https://your-domain.com
+		this.baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 	}
 
-	// Завантаження всіх продуктів з Payload
+	// Завантаження всіх продуктів з Payload + ISR кешування
 	async getAllProducts(): Promise<Product[]> {
 		try {
-			const response = await fetch(`${this.apiUrl}?limit=1000`)
+			const url = `${this.baseUrl}/api/products?limit=1000`
+			
+			console.log('🔍 Fetching products from:', url)
+
+			const response = await fetch(url, {
+				// ISR КЕШУВАННЯ - КРИТИЧНО!
+				next: { 
+					revalidate: 3600, // 1 година
+					tags: ['products'] // Для on-demand revalidation
+				}
+			})
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
@@ -48,12 +60,12 @@ class ProductService {
 
 			const data = await response.json()
 			
-			console.log('Products from Payload:', data.docs)
+			console.log('✅ Products loaded:', data.docs?.length || 0)
 			
 			return data.docs || []
 		} catch (error) {
-			console.error('Помилка завантаження продуктів:', error)
-			return []
+			console.error('❌ Помилка завантаження продуктів:', error)
+			return [] // Повертаємо пустий масив щоб білд не падав
 		}
 	}
 
@@ -64,8 +76,14 @@ class ProductService {
 				throw new Error('productLink не вказано')
 			}
 
-			// Запит з фільтром по productLink
-			const response = await fetch(`${this.apiUrl}?where[productLink][equals]=${productLink}&limit=1`)
+			const url = `${this.baseUrl}/api/products?where[productLink][equals]=${productLink}&limit=1`
+
+			const response = await fetch(url, {
+				next: { 
+					revalidate: 3600,
+					tags: ['products', `product-${productLink}`]
+				}
+			})
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
@@ -81,7 +99,7 @@ class ProductService {
 			return data.docs[0]
 		} catch (error) {
 			console.error('Помилка отримання інформації про продукт:', error)
-			throw error
+			return null
 		}
 	}
 
@@ -99,9 +117,11 @@ class ProductService {
 	// Отримання продуктів по модельній групі
 	async getProductsByModel(modelGroup: string): Promise<Product[]> {
 		try {
-			const response = await fetch(
-				`${this.apiUrl}?where[modelGroup][equals]=${encodeURIComponent(modelGroup)}&limit=100`
-			)
+			const url = `${this.baseUrl}/api/products?where[modelGroup][equals]=${encodeURIComponent(modelGroup)}&limit=100`
+			
+			const response = await fetch(url, {
+				next: { revalidate: 3600 }
+			})
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
@@ -118,9 +138,11 @@ class ProductService {
 	// Отримання продуктів по phone (напр. "Apple iPhone 14")
 	async getProductsByPhone(phone: string): Promise<Product[]> {
 		try {
-			const response = await fetch(
-				`${this.apiUrl}?where[phone][equals]=${encodeURIComponent(phone)}&limit=100`
-			)
+			const url = `${this.baseUrl}/api/products?where[phone][equals]=${encodeURIComponent(phone)}&limit=100`
+			
+			const response = await fetch(url, {
+				next: { revalidate: 3600 }
+			})
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
@@ -137,9 +159,11 @@ class ProductService {
 	// Отримання популярних продуктів
 	async getPopularProducts(limit = 10): Promise<Product[]> {
 		try {
-			const response = await fetch(
-				`${this.apiUrl}?where[popular][equals]=true&limit=${limit}`
-			)
+			const url = `${this.baseUrl}/api/products?where[popular][equals]=true&limit=${limit}`
+			
+			const response = await fetch(url, {
+				next: { revalidate: 3600, tags: ['popular-products'] }
+			})
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
@@ -156,9 +180,11 @@ class ProductService {
 	// Отримання продуктів зі знижкою
 	async getDiscountProducts(limit = 10): Promise<Product[]> {
 		try {
-			const response = await fetch(
-				`${this.apiUrl}?where[discount][greater_than]=0&sort=-discount&limit=${limit}`
-			)
+			const url = `${this.baseUrl}/api/products?where[discount][greater_than]=0&sort=-discount&limit=${limit}`
+			
+			const response = await fetch(url, {
+				next: { revalidate: 3600, tags: ['discount-products'] }
+			})
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
@@ -193,9 +219,11 @@ class ProductService {
 			if (!currentProduct) return []
 
 			// Потім шукаємо інші продукти тієї ж групи
-			const response = await fetch(
-				`${this.apiUrl}?where[modelGroup][equals]=${encodeURIComponent(currentProduct.modelGroup)}&where[productLink][not_equals]=${currentProductLink}&limit=${limit}`
-			)
+			const url = `${this.baseUrl}/api/products?where[modelGroup][equals]=${encodeURIComponent(currentProduct.modelGroup)}&where[productLink][not_equals]=${currentProductLink}&limit=${limit}`
+			
+			const response = await fetch(url, {
+				next: { revalidate: 3600 }
+			})
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
@@ -212,9 +240,11 @@ class ProductService {
 	// Пошук продуктів по назві
 	async searchProducts(query: string, limit = 20): Promise<Product[]> {
 		try {
-			const response = await fetch(
-				`${this.apiUrl}?where[or][0][model][contains]=${encodeURIComponent(query)}&where[or][1][modelGroup][contains]=${encodeURIComponent(query)}&where[or][2][phone][contains]=${encodeURIComponent(query)}&limit=${limit}`
-			)
+			const url = `${this.baseUrl}/api/products?where[or][0][model][contains]=${encodeURIComponent(query)}&where[or][1][modelGroup][contains]=${encodeURIComponent(query)}&where[or][2][phone][contains]=${encodeURIComponent(query)}&limit=${limit}`
+			
+			const response = await fetch(url, {
+				next: { revalidate: 1800 } // 30 хвилин для пошуку
+			})
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
@@ -268,7 +298,11 @@ class ProductService {
 			if (popular !== undefined) params.append('where[popular][equals]', popular.toString())
 			if (hasDiscount) params.append('where[discount][greater_than]', '0')
 
-			const response = await fetch(`${this.apiUrl}?${params.toString()}`)
+			const url = `${this.baseUrl}/api/products?${params.toString()}`
+			
+			const response = await fetch(url, {
+				next: { revalidate: 3600 }
+			})
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)

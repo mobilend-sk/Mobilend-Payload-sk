@@ -1,12 +1,12 @@
 // app/katalog/page.js
-// Сторінка каталогу з ISR та SSR
+// Сторінка каталогу з ISR
 
 import CatalogList from '@/pages/CatalogPage/CatalogList/CatalogList'
-import productServiceServer from '@/services/productServer.service'
+import productService from '@/services/productClient.service'
 
 // ISR налаштування
 export const revalidate = 3600 // Кешувати на 1 годину
-export const dynamic = 'force-static'
+// ВИДАЛИТИ dynamic = 'force-static' якщо використовуємо searchParams!
 
 // Генерація метаданих
 export async function generateMetadata() {
@@ -65,12 +65,15 @@ export async function generateMetadata() {
 // Головний компонент - SSR з передачею даних
 export default async function KatalogPage({ searchParams }) {
   try {
-    // Розпаковуємо searchParams (Next.js 15)
-    const params = await searchParams
-    const initialSearchTerm = params?.search || ''
+    // В Next.js 15 searchParams може бути Promise
+    const resolvedParams = searchParams instanceof Promise 
+      ? await searchParams 
+      : searchParams
+    
+    const initialSearchTerm = resolvedParams?.search || ''
 
     // Завантажуємо продукти на сервері
-    const products = await productServiceServer.getAllProducts()
+    const products = await productService.getAllProducts()
 
     console.log(`📦 Завантажено ${products.length} продуктів для каталогу`)
 

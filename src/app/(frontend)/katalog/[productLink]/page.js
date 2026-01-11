@@ -3,7 +3,7 @@
 
 import { notFound } from 'next/navigation'
 import ProductPage from "@/pages/ProductPage/ProductPage"
-import productServiceServer from "@/services/productServer.service"
+import productService from '@/services/productClient.service'
 
 // Генерація статичних путей для популярних товарів
 export async function generateStaticParams() {
@@ -11,7 +11,7 @@ export async function generateStaticParams() {
     console.log('🔄 Генерація статичних шляхів для популярних товарів...')
 
     // Отримуємо популярні товари для першої генерації
-    const popularProducts = await productServiceServer.getPopularProducts(50)
+    const popularProducts = await productService.getPopularProducts(50)
     
     console.log(`✅ Згенеровано ${popularProducts.length} статичних шляхів`)
 
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
   try {
     const { productLink } = await params
 
-    const product = await productServiceServer.getProductInfo(productLink)
+    const product = await productService.getProductInfo(productLink)
 
     if (!product) {
       return {
@@ -133,7 +133,7 @@ export default async function KatalogProductPage({ params }) {
     console.log(`📦 Завантаження товару: ${productLink}`)
 
     // Отримуємо дані на сервері
-    const product = await productServiceServer.getProductInfo(productLink)
+    const product = await productService.getProductInfo(productLink)
 
     if (!product) {
       console.warn(`⚠️ Товар "${productLink}" не знайдено`)

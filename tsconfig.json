@@ -37,7 +37,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "src/app/(frontend)/page.jsx", "src/app/(frontend)/katalog/[productLink]/page.js"  ],
+, "src/app/(frontend)/page.jsx", "src/app/(frontend)/katalog/[productLink]/page.js", "src/app/(frontend)/katalog/page.js"  ],
   "exclude": [
     "node_modules"
   ],

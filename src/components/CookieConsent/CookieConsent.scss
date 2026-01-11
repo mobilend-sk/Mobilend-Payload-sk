@@ -1,0 +1,315 @@
+// src/components/CookieConsent/CookieConsent.scss
+// Стилі для TermsFeed Cookie Consent Banner - позиціонування внизу
+
+/* ============================================ */
+/* COOKIE CONSENT BANNER - BOTTOM POSITION */
+/* ============================================ */
+
+// Основний контейнер (TermsFeed використовує ці класи!)
+#termsfeed-com---nb {
+  position: fixed !important;
+  bottom: 0 !important;
+  top: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 9999 !important;
+  margin: 0 !important;
+  
+  // Анімація появи знизу
+  animation: slideUpFromBottom 0.4s ease-out !important;
+}
+
+@keyframes slideUpFromBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Контейнер контенту
+.cc-nb-main-container {
+  position: relative !important;
+  bottom: 0 !important;
+  top: auto !important;
+  
+  // Тінь зверху
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15) !important;
+  
+  // Відступи
+  padding: 24px 20px !important;
+  
+  // Максимальна ширина контенту
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  
+  @media (max-width: 768px) {
+    padding: 20px 16px !important;
+  }
+}
+
+/* ============================================ */
+/* ЗАГОЛОВОК */
+/* ============================================ */
+
+.cc-nb-title {
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  color: #1a1a1a !important;
+  margin-bottom: 12px !important;
+  
+  @media (max-width: 768px) {
+    font-size: 18px !important;
+  }
+}
+
+/* ============================================ */
+/* ТЕКСТ */
+/* ============================================ */
+
+.cc-nb-text {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: #4a4a4a !important;
+  margin-bottom: 16px !important;
+  
+  @media (max-width: 768px) {
+    font-size: 13px !important;
+  }
+}
+
+/* ============================================ */
+/* КНОПКИ */
+/* ============================================ */
+
+.cc-nb-buttons-container {
+  display: flex !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  
+  @media (max-width: 768px) {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+}
+
+// Всі кнопки базові стилі
+.cc-nb-okagree,
+.cc-nb-reject,
+.cc-nb-changep {
+  padding: 12px 24px !important;
+  border-radius: 6px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  
+  @media (max-width: 768px) {
+    width: 100% !important;
+    padding: 14px 24px !important;
+  }
+  
+  &:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  &:active {
+    transform: translateY(0) !important;
+  }
+}
+
+// Кнопка "Súhlasím" (зелена)
+.cc-nb-okagree {
+  background: var(--darkBlue) !important;
+  color: #ffffff !important;
+
+}
+
+// Кнопка "Odmietam" (червона)
+.cc-nb-reject {
+  background: var(--red) !important;
+  color: #ffffff !important;
+
+}
+
+// Кнопка "Zmeniť nastavenia" (сіра)
+.cc-nb-changep {
+  background: #e0e0e0 !important;
+  color: #333333 !important;
+  
+  &:hover {
+    background: #d0d0d0 !important;
+  }
+}
+
+/* ============================================ */
+/* RESPONSIVE - МОБІЛЬНІ */
+/* ============================================ */
+
+@media (max-width: 768px) {
+  #termsfeed-com---nb {
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+  
+  .cc-nb-main-container {
+    // Менше відступи на мобільних
+    padding: 16px 12px !important;
+  }
+  
+  .cc-nb-buttons-container {
+    // Кнопки в колонку
+    button {
+      width: 100% !important;
+    }
+  }
+}
+
+/* ============================================ */
+/* ОБМЕЖЕННЯ ВИСОТИ (якщо текст занадто довгий) */
+/* ============================================ */
+
+.cc-nb-text-container {
+  max-height: 150px !important;
+  overflow-y: auto !important;
+  
+  // Стилі скролбара
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+    
+    &:hover {
+      background: #555;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    max-height: 200px !important;
+  }
+}
+
+/* ============================================ */
+/* КАСТОМІЗАЦІЯ ПІД ВАШ БРЕНД */
+/* ============================================ */
+
+// Світла тема (за замовчуванням)
+.termsfeed-com---palette-light {
+  #termsfeed-com---nb {
+    background: #ffffff !important;
+    border-top: 3px solid #4CAF50 !important; // Зелена лінія зверху
+  }
+}
+
+// Темна тема
+.termsfeed-com---palette-dark {
+  #termsfeed-com---nb {
+    background: #1e1e1e !important;
+    border-top: 3px solid #4CAF50 !important;
+  }
+  
+  .cc-nb-title {
+    color: #ffffff !important;
+  }
+  
+  .cc-nb-text {
+    color: #cccccc !important;
+  }
+}
+
+/* ============================================ */
+/* ПОСИЛАННЯ */
+/* ============================================ */
+
+.cc-nb-text a {
+  color: #4CAF50 !important;
+  text-decoration: underline !important;
+  
+  &:hover {
+    color: #45a049 !important;
+  }
+}
+
+/* ============================================ */
+/* BACKDROP (затемнення фону) - ОПЦІОНАЛЬНО */
+/* ============================================ */
+
+// Якщо хочете затемнити фон коли з'являється banner
+/*
+#termsfeed-com---nb::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+*/
+
+/* ============================================ */
+/* FIX ДЛЯ BODY (щоб контент не закривався) */
+/* ============================================ */
+
+// Додає відступ знизу body коли banner активний
+body:has(#termsfeed-com---nb) {
+  padding-bottom: 200px !important;
+  
+  @media (max-width: 768px) {
+    padding-bottom: 300px !important;
+  }
+}
+
+/* ============================================ */
+/* ДОДАТКОВІ ВАРІАНТИ ПОЗИЦІОНУВАННЯ */
+/* ============================================ */
+
+// Варіант 1: Banner в нижньому правому куті (popup стиль)
+/*
+#termsfeed-com---nb {
+  bottom: 20px !important;
+  left: auto !important;
+  right: 20px !important;
+  width: 420px !important;
+  max-width: calc(100vw - 40px) !important;
+  border-radius: 12px !important;
+  
+  .cc-nb-main-container {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2) !important;
+  }
+}
+*/
+
+// Варіант 2: Banner в нижньому лівому куті
+/*
+#termsfeed-com---nb {
+  bottom: 20px !important;
+  left: 20px !important;
+  right: auto !important;
+  width: 420px !important;
+  max-width: calc(100vw - 40px) !important;
+  border-radius: 12px !important;
+}
+*/
