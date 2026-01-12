@@ -73,7 +73,6 @@ export interface Config {
     blog: Blog;
     orders: Order;
     transactions: Transaction;
-    'media-folders': MediaFolder;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -87,7 +86,6 @@ export interface Config {
     blog: BlogSelect<false> | BlogSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
     transactions: TransactionsSelect<false> | TransactionsSelect<true>;
-    'media-folders': MediaFoldersSelect<false> | MediaFoldersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -160,10 +158,6 @@ export interface Media {
    * Опис зображення для SEO та доступності
    */
   alt?: string | null;
-  /**
-   * Виберіть папку для організації файлів
-   */
-  folder?: (string | null) | MediaFolder;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -201,33 +195,6 @@ export interface Media {
       filename?: string | null;
     };
   };
-}
-/**
- * Управління папками для медіафайлів
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media-folders".
- */
-export interface MediaFolder {
-  id: string;
-  /**
-   * Назва папки (напр. Products, Blog)
-   */
-  name: string;
-  /**
-   * URL-friendly назва (напр. products, blog)
-   */
-  slug: string;
-  /**
-   * Опціональний опис призначення папки
-   */
-  description?: string | null;
-  /**
-   * Відображати папку в списку
-   */
-  active?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -276,16 +243,15 @@ export interface Product {
    */
   shortInfo?: string | null;
   /**
-   * Базовий URL для зображень (автогенерується)
+   * Головне зображення продукту
    */
-  baseImageUrl?: string | null;
+  mainImage: string | Media;
   /**
-   * Назва головного зображення (автогенерується)
+   * Додаткові зображення продукту
    */
-  mainImage?: string | null;
   images?:
     | {
-        filename?: string | null;
+        image: string | Media;
         id?: string | null;
       }[]
     | null;
@@ -374,7 +340,7 @@ export interface Blog {
   description: string;
   date: string;
   slug: string;
-  image: string;
+  image: string | Media;
   categories: {
     category: string;
     id?: string | null;
@@ -590,10 +556,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'transactions';
         value: string | Transaction;
-      } | null)
-    | ({
-        relationTo: 'media-folders';
-        value: string | MediaFolder;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -665,7 +627,6 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  folder?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -730,12 +691,11 @@ export interface ProductsSelect<T extends boolean = true> {
   popular?: T;
   productLink?: T;
   shortInfo?: T;
-  baseImageUrl?: T;
   mainImage?: T;
   images?:
     | T
     | {
-        filename?: T;
+        image?: T;
         id?: T;
       };
   mainCharacteristics?:
@@ -994,18 +954,6 @@ export interface TransactionsSelect<T extends boolean = true> {
   statusCheckAttempts?: T;
   lastStatusCheck?: T;
   responseData?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media-folders_select".
- */
-export interface MediaFoldersSelect<T extends boolean = true> {
-  name?: T;
-  slug?: T;
-  description?: T;
-  active?: T;
   updatedAt?: T;
   createdAt?: T;
 }

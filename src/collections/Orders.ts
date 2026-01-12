@@ -1,7 +1,11 @@
 import { CollectionConfig } from 'payload'
+import { decryptAfterRead } from "@/utils/payload-decryption"
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
+  hooks: {
+    afterRead: [decryptAfterRead],
+  },
   admin: {
     useAsTitle: 'orderNumber',
     defaultColumns: ['orderNumber', 'status', 'paymentMethod', 'createdAt'],
@@ -204,5 +208,7 @@ export const Orders: CollectionConfig = {
       name: 'telegramMessageId',
       type: 'number',
     },
+
+
   ],
 }

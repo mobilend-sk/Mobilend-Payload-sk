@@ -50,15 +50,5 @@ export const Media: CollectionConfig = {
         description: 'Опис зображення для SEO та доступності',
       },
     },
-    {
-      name: 'folder',
-      type: 'relationship',
-      relationTo: 'media-folders',
-      label: 'Папка',
-      required: false,
-      admin: {
-        description: 'Виберіть папку для організації файлів',
-      },
-    },
   ],
 }
