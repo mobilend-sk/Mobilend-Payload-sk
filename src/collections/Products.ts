@@ -9,6 +9,13 @@ const generateSlug = (phone: string, model: string, memory: string): string => {
     .replace(/^-+|-+$/g, '')
 }
 
+// Функція для генерації назви головного зображення
+const generateMainImage = (phone: string, color: string): string => {
+  const phoneName = phone.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()
+  const colorName = color.replace('#', '').toLowerCase()
+  return `${phoneName}-${colorName}-main.jpg`
+}
+
 export const Products: CollectionConfig = {
   slug: 'products',
   admin: {
@@ -26,6 +33,18 @@ export const Products: CollectionConfig = {
           if (data.phone && data.model && data.memory) {
             data.productLink = generateSlug(data.phone, data.model, data.memory)
           }
+        }
+
+        // Автогенерація mainImage
+        if (operation === 'create' || !data.mainImage) {
+          if (data.phone && data.color) {
+            data.mainImage = generateMainImage(data.phone, data.color)
+          }
+        }
+
+        // Автогенерація baseImageUrl якщо не вказано
+        if (!data.baseImageUrl) {
+          data.baseImageUrl = '/images/products'
         }
 
         return data
@@ -132,26 +151,27 @@ export const Products: CollectionConfig = {
       },
     },
     {
-      name: 'mainImage',
-      type: 'upload',
-      relationTo: 'media',
-      required: true,
+      name: 'baseImageUrl',
+      type: 'text',
       admin: {
-        description: 'Головне зображення продукту',
+        description: 'Базовий URL для зображень (автогенерується)',
+      },
+    },
+    {
+      name: 'mainImage',
+      type: 'text',
+      admin: {
+        description: 'Назва головного зображення (автогенерується)',
+        readOnly: true,
       },
     },
     {
       name: 'images',
       type: 'array',
-      admin: {
-        description: 'Додаткові зображення продукту',
-      },
       fields: [
         {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          required: true,
+          name: 'filename',
+          type: 'text',
         },
       ],
     },

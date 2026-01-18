@@ -15,10 +15,12 @@ import "./StepConfirmation.scss"
 // КОНСТАНТИ (оновлені)
 // =============================
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
-const MAX_RETRIES = 60 // Збільшено до 60 спроб
-const INITIAL_RETRY_INTERVAL = 10000 // Початковий інтервал 3 сек
-const MAX_RETRY_INTERVAL = 30000 // Максимальний інтервал 30 сек
-const BACKOFF_MULTIPLIER = 1.5 // Множник для exponential backoff
+const MAX_RETRIES = 20;
+const INITIAL_RETRY_INTERVAL = 5000; // 2 сек
+const MAX_RETRY_INTERVAL = 10000; // 10 сек
+const BACKOFF_MULTIPLIER = 1.3;
+
+// Всього: ~3-4 хвилини максимум
 
 const PAYMENT_METHODS = {
 	cash_on_delivery: 'Dobierka (platba pri prevzatí)',
@@ -515,6 +517,10 @@ const StepConfirmation = ({
 	// POTVRDENIE OBJEDNAVKY
 	// =============================
 	const handleConfirmOrder = useCallback(async () => {
+		if (isSubmitting) {
+			console.log('Already submitting...');
+			return;
+		}
 		setIsSubmitting(true);
 
 		try {
@@ -524,6 +530,7 @@ const StepConfirmation = ({
 
 			// 1️⃣ Dobierka — просто створюємо замовлення, без редіректу
 			if (paymentMethod === "cash_on_delivery") {
+				setIsSubmitting(false);
 				await orderAPI.createOrder(orderData);
 				handleOrderSuccess(newOrderNumber);
 				return;
@@ -545,7 +552,12 @@ const StepConfirmation = ({
 			const responseData = await orderAPI.createOrder(orderData);
 
 			if (responseData.tatraPayPlusUrl && responseData.orderId) {
-				storage.setPendingOrder(responseData.orderId, newOrderNumber);
+				//  Чекаємо підтвердження збереження
+				await new Promise(resolve => {
+					storage.setPendingOrder(responseData.orderId, newOrderNumber);
+					setTimeout(resolve, 100);
+				});
+
 				window.location.replace(responseData.tatraPayPlusUrl);
 				return;
 			}
@@ -557,7 +569,7 @@ const StepConfirmation = ({
 			alert(error.message || "Chyba pri odoslaní objednávky.");
 			setIsSubmitting(false);
 		}
-	}, [deliveryData, prepareOrderData, handleOrderSuccess]);
+	}, [deliveryData, prepareOrderData, handleOrderSuccess, isSubmitting]);
 
 	// =============================
 	// POMOCNE FUNKCIE PRE RENDER

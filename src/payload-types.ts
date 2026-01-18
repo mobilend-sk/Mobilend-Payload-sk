@@ -243,15 +243,16 @@ export interface Product {
    */
   shortInfo?: string | null;
   /**
-   * Головне зображення продукту
+   * Базовий URL для зображень (автогенерується)
    */
-  mainImage: string | Media;
+  baseImageUrl?: string | null;
   /**
-   * Додаткові зображення продукту
+   * Назва головного зображення (автогенерується)
    */
+  mainImage?: string | null;
   images?:
     | {
-        image: string | Media;
+        filename?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -691,11 +692,12 @@ export interface ProductsSelect<T extends boolean = true> {
   popular?: T;
   productLink?: T;
   shortInfo?: T;
+  baseImageUrl?: T;
   mainImage?: T;
   images?:
     | T
     | {
-        image?: T;
+        filename?: T;
         id?: T;
       };
   mainCharacteristics?:

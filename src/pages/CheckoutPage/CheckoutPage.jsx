@@ -26,6 +26,7 @@ const CheckoutPageContent = () => {
 
 	const urlStep = Number(searchParams.get("step")) || 1
 	const [currentStep, setCurrentStep] = useState(urlStep)
+	const [isInitialized, setIsInitialized] = useState(false)
 
 	const [backendStep, setBackendStep] = useState(1)
 
@@ -81,68 +82,92 @@ const CheckoutPageContent = () => {
 		}
 	})
 
-	// =============================
-	// 1) Nacitanie step z backendu
-	// =============================
 	useEffect(() => {
 		const init = async () => {
 			setLoading(true)
 
 			try {
-				// 1. Získanie stepu z backendu
+				// 1. Отримати step з бекенду
 				const cartData = await cartService.get()
+				const serverStep = cartData?.cart?.step || 1
+				setBackendStep(serverStep)
 
-				const backendStep = cartData?.cart?.step || 1
-				setBackendStep(backendStep)
-
-				// 2. URL step
+				// 2. Отримати URL step і параметри
 				const urlStep = Number(searchParams.get("step")) || 1
+				const urlStatus = searchParams.get("status")
+				const urlOrderId = searchParams.get("orderId")
+				const urlPaymentId = searchParams.get("paymentId")
 
-				// 3. Ak URL > backendStep → redirect naspäť
-				if (urlStep > backendStep) {
-					router.replace(`${pathname}?step=${backendStep}`)
-					setCurrentStep(backendStep)
-					setLoading(false)
-					return
+				// ✅ ВИНЯТОК: Якщо є параметри платежу - дозволити step 3
+				const isPaymentCallback = urlStatus && urlOrderId
+
+				// 3. Визначити правильний step
+				let correctStep = serverStep
+
+				// Якщо URL вказує на попередній крок - дозволити
+				if (urlStep < serverStep) {
+					correctStep = urlStep
 				}
 
-				// 4. Ak URL < backendStep → aktualizácia URL
-				if (urlStep < backendStep) {
-					router.replace(`${pathname}?step=${backendStep}`)
-					setCurrentStep(backendStep)
-					setLoading(false)
-					return
+				// ✅ Якщо це повернення з платіжки - дозволити step 3
+				if (isPaymentCallback && urlStep === 3) {
+					correctStep = 3
+				}
+				// Інакше - якщо URL вказує на наступний крок - заборонити
+				else if (urlStep > serverStep) {
+					correctStep = serverStep
 				}
 
-				// 5. Ak URL == backend → OK
-				setCurrentStep(urlStep)
+				// 4. Синхронізувати URL і state
+				if (urlStep !== correctStep) {
+					router.replace(`${pathname}?step=${correctStep}`)
+				}
+
+				setCurrentStep(correctStep)
+				setIsInitialized(true)
+
 			} catch (error) {
 				console.error("Init error:", error)
-				// Pri chybe nastavíme defaultný krok
 				setBackendStep(1)
 				setCurrentStep(1)
+				setIsInitialized(true)
 			} finally {
 				setLoading(false)
 			}
 		}
 
 		init()
-	}, [])
+	}, [])  // ✅ Запускається ТІЛЬКИ при mount
 
 	// =============================
-	// 2) Reakcia na zmenu URL
+	// 2️⃣ Реакція на зміну URL (ТІЛЬКИ після ініціалізації)
 	// =============================
 	useEffect(() => {
-		const step = Number(searchParams.get("step")) || 1
+		if (!isInitialized) return  // ✅ Пропустити до завершення init
 
-		if (step > backendStep) {
+		const urlStep = Number(searchParams.get("step")) || 1
+		const urlStatus = searchParams.get("status")
+		const urlOrderId = searchParams.get("orderId")
+
+		// ✅ Якщо є параметри платежу - НЕ валідувати step
+		const isPaymentCallback = urlStatus && urlOrderId
+
+		if (isPaymentCallback && urlStep === 3) {
+			setCurrentStep(3)
+			return
+		}
+
+		// Якщо URL > backend step - повернути назад
+		if (urlStep > backendStep) {
 			router.replace(`${pathname}?step=${backendStep}`)
 			setCurrentStep(backendStep)
 			return
 		}
 
-		setCurrentStep(step)
-	}, [searchParams, backendStep])
+		// Інакше оновити currentStep
+		setCurrentStep(urlStep)
+
+	}, [searchParams, backendStep, isInitialized, pathname, router])
 
 	// =============================
 	// 3) Nacitanie produktov
