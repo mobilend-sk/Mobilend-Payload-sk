@@ -1,4 +1,5 @@
 // Клієнтський сервіс для роботи з продуктами через Payload API
+import 'dotenv/config'
 
 interface Product {
 	id: string

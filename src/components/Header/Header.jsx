@@ -7,6 +7,9 @@ import CartLink from "../CartLink/CartLink"
 import { AlignJustify, Link, X } from "lucide-react"
 import { useState } from "react"
 import "./Header.scss"
+import 'dotenv/config'
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
 
 const Header = () => {
 	const [activeMenu, setActiveMenu] = useState(false)
@@ -22,7 +25,7 @@ const Header = () => {
 						</div>
 						<div className="header-ico__wrapper">
 							<ActiveOrdersComponent
-								apiUrl="http://localhost:5000/api/offer"
+								apiUrl={`${API_URL}/api/offer`}
 								headerSelector=".header"
 								activeHeaderClass="header--orders-active"
 							/>
@@ -47,13 +50,13 @@ const Header = () => {
 			<nav className="mobile-bottom-menu">
 				<button
 					className="mobile-bottom-menu__katalog">
-						<Link href="/katalog"/>
+					<Link href="/katalog" />
 				</button>
 				<div className="mobile-bottom-menu__cart">
 					<CartLink />
 				</div>
 				<ActiveOrdersComponent
-					apiUrl="http://localhost:5000/api/offer"
+					apiUrl={`${API_URL}/api/offer`}
 					headerSelector=".header"
 					activeHeaderClass="header--orders-active"
 				/>

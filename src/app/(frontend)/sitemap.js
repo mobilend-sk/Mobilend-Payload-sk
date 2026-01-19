@@ -1,5 +1,6 @@
 // src/app/(frontend)/sitemap.js
 // Автоматическая генерация sitemap.xml
+import 'dotenv/config'
 
 // Получаем все посты блога из Payload API
 async function getAllBlogSlugs() {

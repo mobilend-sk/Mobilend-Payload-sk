@@ -40,10 +40,9 @@ export const Blog: CollectionConfig = {
     },
     {
       name: 'image',
-      type: 'upload',
-      relationTo: 'media',
+      type: 'text',
       required: true,
-      label: 'Hlavný obrázok',
+      label: 'Hlavný obrázok (URL)',
     },
     {
       name: 'categories',

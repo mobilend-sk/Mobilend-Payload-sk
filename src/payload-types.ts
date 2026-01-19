@@ -349,7 +349,7 @@ export interface Blog {
   description: string;
   date: string;
   slug: string;
-  image: string | Media;
+  image: string;
   categories: {
     category: string;
     id?: string | null;

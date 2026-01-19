@@ -9,6 +9,7 @@ import {
 	Check,
 	Loader2
 } from "lucide-react"
+import 'dotenv/config'
 import "./StepConfirmation.scss"
 
 // =============================

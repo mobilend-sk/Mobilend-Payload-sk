@@ -1,4 +1,6 @@
-const API_URL = "http://localhost:5000/api/cart"
+
+const API_URL = 'http://localhost:5000/api/card'
+
 
 const cartService = {
 
